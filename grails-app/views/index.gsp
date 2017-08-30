@@ -159,10 +159,8 @@
 				</div>
 
 				<div class="form-group ">
-					<button type="button" class="btn btn-primary btn-lg btn-block login-button">Registrarse</button>
-				</div>
-				<div class="login-register">
-					<input type="button" onclick="test()" value="hola"></input>
+					<button type="submit" class="btn btn-primary btn-lg btn-block login-button">Registrarse</button>
+					<input type="button" onlick="test()" class="btn btn-primary btn-lg btn-block login-button" value="test"/>
 				</div>
 			</form>
 		</div>
@@ -177,27 +175,58 @@
 //            }
 //        })
 //    }
-    $(document).ready(function(){
+$(document).ready(function() {
+        alert('hola');
 
-        $("#username").focusout(function(){
-            $("#username").trigger('submit.success');
-
-			var Parameters = {usuario: $("#usuario").val()};
-
-			$.ajax({
-				url: "${createLink(controller:'usuario', action:'ajaxFindUsuario')}",
-				type: "GET",
-				data: Parameters,
-				success: function(resp){
-						$("#username").validator();
-				}
-			});
-        });
+    $.fn.validator.Constructor.INPUT_SELECTOR = ':input:not([type="submit"], button):enabled';
+    $('#form_usuario').validator({
+        delay: 200,
+        focus: false,
+        feedback: {
+            success: 'glyphicon glyphicon-ok-sign',
+            error: 'glyphicon glyphicon-exclamation-sign'
+        },
+        custom: {
+            username: function($el) {
+                var result = 'hola'
+                console.log(result);
+                if (!result)
+                    return "Custom Error: Select one or more options";
+                else
+                    return false;
+            }
+        },
+        errors: {
+            username: "Select one or more options"
+        }
     });
+//    alert($('#username').val());
 
+//    $('#createUser').validator().on('submit', function (e) {
+//        if (e.isDefaultPrevented()) {
+//            alert('1');
+//        } else {
+//            alert('2');
+//        }
+//    });
+});
+    %{--$(document).ready(function(){--}%
 
+        %{--$("#username").focusout(function(){--}%
+            %{--$("#username").trigger('submit.success');--}%
 
+			%{--var Parameters = {usuario: $("#usuario").val()};--}%
 
+			%{--$.ajax({--}%
+				%{--url: "${createLink(controller:'usuario', action:'ajaxFindUsuario')}",--}%
+				%{--type: "GET",--}%
+				%{--data: Parameters,--}%
+				%{--success: function(resp){--}%
+						%{--$("#username").validator();--}%
+				%{--}--}%
+			%{--});--}%
+        %{--});--}%
+    %{--});--}%
 </script>
 </body>
 </html>
