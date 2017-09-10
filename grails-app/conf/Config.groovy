@@ -87,6 +87,12 @@ grails.hibernate.pass.readonly = false
 // configure passing read-only to OSIV session by default, requires "singleSession = false" OSIV mode
 grails.hibernate.osiv.readonly = false
 
+grails.plugin.springsecurity.password.algorithm = 'bcrypt'
+grails.plugin.springsecurity.useSecurityEventListener = true
+grails.plugin.springsecurity.onAbstractAuthenticationFailureEvent = { e, appCtx ->
+    println "\nERROR auth failed for user $e.authentication.name: $e.exception.message\n"
+}
+
 environments {
     development {
         grails.logging.jul.usebridge = true
@@ -123,6 +129,8 @@ log4j = {
         info 'file'
     }
 
+    debug 'org.springframework.security'
+
     error   'org.codehaus.groovy.grails.web.servlet',        // controllers
             'org.codehaus.groovy.grails.web.pages',          // GSP
             'org.codehaus.groovy.grails.web.sitemesh',       // layouts
@@ -134,12 +142,30 @@ log4j = {
             'org.springframework',
             'org.hibernate',
             'net.sf.ehcache.hibernate'
+            'org.springframework.security'
 
     warn    'org.springframework',
             'org.hibernate',
             'grails.plugins.springsecurity',
             'groovyx.net.http'
+            'org.springframework.security'
 
     all     'grails.app'
 
 }
+
+// Added by the Spring Security Core plugin:
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'amordepatitas.seguridad.SecUser'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'amordepatitas.seguridad.SecUserSecRole'
+grails.plugin.springsecurity.authority.className = 'amordepatitas.seguridad.SecRole'
+grails.plugin.springsecurity.controllerAnnotations.staticRules = [
+	'/':                              ['permitAll'],
+	'/index':                         ['permitAll'],
+	'/index.gsp':                     ['permitAll'],
+	'/assets/**':                     ['permitAll'],
+	'/**/js/**':                      ['permitAll'],
+	'/**/css/**':                     ['permitAll'],
+	'/**/images/**':                  ['permitAll'],
+	'/**/favicon.ico':                ['permitAll']
+]
+

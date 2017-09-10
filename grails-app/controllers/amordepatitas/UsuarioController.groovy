@@ -1,4 +1,6 @@
 package amordepatitas
+
+import amordepatitas.seguridad.SecUser
 import org.codehaus.groovy.grails.web.json.JSONObject
 
 import java.text.DateFormat
@@ -12,13 +14,13 @@ class UsuarioController {
         DateFormat sourceFormat = new SimpleDateFormat("yyyy-MM-dd");
         String dateAsString = params.fechaNacimiento
         Date fechaNacimiento = sourceFormat.parse(dateAsString)
-        Usuario usuario = new Usuario(
+        SecUser usuario = new SecUser(
                 password: params.password,
-                fechaNacimiento: fechaNacimiento,
-                nombre: params.name,
+                dateBirth: fechaNacimiento,
+                name: params.name,
                 email: params.email,
-                usuario: params.username,
-                fecha_creacion: new Date()
+                username: params.username,
+                dateCreated: new Date()
         )
 
         boolean usuarioResult = usuarioService.createUsuario(usuario)
