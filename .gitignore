@@ -11,6 +11,11 @@ webserver/target-eclipse/*
 .settings/*
 .idea/
 .class
+0/*
+amorDePatitas/*
+app.log
+stacktrace.log
+.asscache
 */*.class
 #*
 .metadata/*
