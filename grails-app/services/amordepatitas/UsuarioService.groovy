@@ -12,12 +12,12 @@ class UsuarioService {
     private static final Logger LOG = Logger.getLogger(getClass())
 
     boolean createUsuario(SecUser usuario){
-        SecRole rol = SecRole.findByAuthority("USUARIO")
+        SecRole rol = SecRole.findByAuthority("ROLE_USER")
         return create(usuario, rol)
     }
 
     boolean createAdmin(SecUser usuario){
-        SecRole rol = SecRole.findByAuthority("ADMIN")
+        SecRole rol = SecRole.findByAuthority("ROLE_ADMIN")
         return create(usuario, rol)
     }
 
@@ -26,16 +26,18 @@ class UsuarioService {
         usuarioRoles.validate()
         if (usuarioRoles.hasErrors()) {
             usuarioRoles.errors.allErrors.each {
-                LOG.error("[ERROR] [CREATE USUARIO - UsuarioRoles] - [ROL: ${rol.authority}] - [Usuario: ${usuario.username}]")
-                return false
+               println it
             }
+//            LOG.error("[ERROR] [CREATE USUARIO - UsuarioRoles] - [ROL: ${rol.authority}] - [Usuario: ${usuario.username}]")
+            return false
         }
 
         if (usuario.hasErrors()) {
             usuario.errors.allErrors.each {
-                LOG.error("[ERROR] [CREATE USUARIO - Usuario] - [ROL: ${rol.authority}] - [Usuario: ${usuario.username}]")
-                return false
+                println it
             }
+//            LOG.error("[ERROR] [CREATE USUARIO - Usuario] - [ROL: ${rol.authority}] - [Usuario: ${usuario.username}]")
+            return false
         }
 
         usuario.save()

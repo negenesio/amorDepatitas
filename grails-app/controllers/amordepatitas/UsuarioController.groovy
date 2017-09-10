@@ -2,7 +2,7 @@ package amordepatitas
 
 import amordepatitas.seguridad.SecUser
 import org.codehaus.groovy.grails.web.json.JSONObject
-
+import grails.plugin.springsecurity.annotation.Secured
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 
@@ -10,6 +10,7 @@ class UsuarioController {
 
     UsuarioService usuarioService
 
+    @Secured(['permitAll'])
     def createUsuario() {
         DateFormat sourceFormat = new SimpleDateFormat("yyyy-MM-dd");
         String dateAsString = params.fechaNacimiento
@@ -20,37 +21,41 @@ class UsuarioController {
                 name: params.name,
                 email: params.email,
                 username: params.username,
-                dateCreated: new Date()
+                dateCreated: new Date(),
+                enabled: true
         )
 
         boolean usuarioResult = usuarioService.createUsuario(usuario)
         if(!usuarioResult){
             return redirect(mapping: 'create_usuario_error')
         }
-        session.usuario = usuario
         return redirect(mapping: 'create_usuario_index')
     }
 
+    @Secured(['permitAll'])
     def ajaxFindUsuario() {
-        if(Usuario.findByUsuario(params.username)){
+        if(SecUser.findByUsername(params.username)){
             return render(new JSONObject('valid':false))
         }
         return render(new JSONObject('valid':true))
     }
 
+    @Secured(['permitAll'])
     def ajaxFindEmail() {
-        if(Usuario.findByEmail(params.email)){
+        if(SecUser.findByEmail(params.email)){
             return render(new JSONObject('valid':false))
         }
         return render(new JSONObject('valid':true))
     }
 
+    @Secured(['permitAll'])
     def createUsuarioError(){
         return render(view: "createUsuarioError")
     }
 
+    @Secured(['permitAll'])
     def createUsuarioIndex(){
-        return render(view: "createUsuarioIndex", model:[usuario:session.usuario])
+        return render(view: "createUsuarioIndex")
     }
 
 }
