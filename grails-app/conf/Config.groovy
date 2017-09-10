@@ -104,32 +104,23 @@ myconfig {
 }
 
 log4j = {
-    def pattern = new PatternLayout("[%p] [%c{3}] %m%n")
-
     appenders {
-        appender new DailyRollingFileAppender(
-                name:"file",
-                file:"${Holders.config.myconfig.myvariable.workdir}/app.log",
-                layout: pattern,
-                datePattern: "'.'yyyy-MM-dd")
+        console name: 'stdout',
+                layout: pattern(conversionPattern: "%d{dd-MM-yyyy HH:mm:ss.SSS} [level:%-5p] [%c{2}] %m%n")
 
         rollingFile name:"stacktrace",
-                file:"${Holders.config.myconfig.myvariable.workdir}/stacktrace.log",
-                maxFileSize:'100KB'
-
-        console name:"stdout",
-                layout: pattern
+                layout: pattern(conversionPattern: "%d{dd-MM-yyyy HH:mm:ss.SSS} [level:%-5p] [%c{2}] %m%n"),
+                file:"amorDePatitas/stacktrace.log",
+                maxFileSize:'100MB'
+        appender new DailyRollingFileAppender(
+                layout: pattern(conversionPattern: "%d{dd-MM-yyyy HH:mm:ss.SSS} [level:%-5p] [%c{2}] %m%n"),
+                name:"file",
+                file:"amorDePatitas/app.log")
     }
-
     root {
-        environments {
-            production {
-                info "file"
-            }
-            development {
-                info "file", "stdout"
-            }
-        }
+        info 'stdout'
+        info 'stacktrace'
+        info 'file'
     }
 
     error   'org.codehaus.groovy.grails.web.servlet',        // controllers

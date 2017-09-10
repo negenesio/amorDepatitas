@@ -1,21 +1,54 @@
 package amordepatitas
+import org.codehaus.groovy.grails.web.json.JSONObject
+
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 
 class UsuarioController {
 
-    def index() { }
+    UsuarioService usuarioService
 
     def createUsuario() {
-        println "------ **** ------"
-        println params
-        println "------ **** ------"
-        return true
+        DateFormat sourceFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String dateAsString = params.fechaNacimiento
+        Date fechaNacimiento = sourceFormat.parse(dateAsString)
+        Usuario usuario = new Usuario(
+                password: params.password,
+                fechaNacimiento: fechaNacimiento,
+                nombre: params.name,
+                email: params.email,
+                usuario: params.username,
+                fecha_creacion: new Date()
+        )
+
+        boolean usuarioResult = usuarioService.createUsuario(usuario)
+        if(!usuarioResult){
+            return redirect(mapping: 'create_usuario_error')
+        }
+        session.usuario = usuario
+        return redirect(mapping: 'create_usuario_index')
     }
 
     def ajaxFindUsuario() {
-        println "------ **** 123------"
-        println params
-        println "------ **** 123------"
-        return render(false)
+        if(Usuario.findByUsuario(params.username)){
+            return render(new JSONObject('valid':false))
+        }
+        return render(new JSONObject('valid':true))
+    }
+
+    def ajaxFindEmail() {
+        if(Usuario.findByEmail(params.email)){
+            return render(new JSONObject('valid':false))
+        }
+        return render(new JSONObject('valid':true))
+    }
+
+    def createUsuarioError(){
+        return render(view: "createUsuarioError")
+    }
+
+    def createUsuarioIndex(){
+        return render(view: "createUsuarioIndex", model:[usuario:session.usuario])
     }
 
 }

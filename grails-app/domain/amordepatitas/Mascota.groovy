@@ -6,8 +6,8 @@ class Mascota {
     String raza
     Date fechaNacimiento
 
-    static belongsTo = [persona: Persona]
-    static hasMany = [imagenes: Imagenes]
+//    static belongsTo = [persona: Persona]
+//    static hasMany = [imagenes: Imagenes]
 
     static constraints = {
     }
