@@ -4,11 +4,16 @@
 	<title><g:layoutTitle default="Grails"/></title>
 	<asset:stylesheet src="application.css"/>
 	<asset:stylesheet src="usuario/indexRegistracion.css"/>
+	<asset:stylesheet src="sidebar.css"/>
+	<g:javascript src="jquery.min.js"/>
+	<g:javascript src="jquery-ui.min.js"/>
+	<g:javascript src="bootstrapvalidator.min.js"/>
+	<g:javascript src="bootstrap.min.js"/>
 	<% def springSecurityService %>
 	<g:layoutHead/>
 </head>
 <body>
-<nav class="navbar navbar-default navbar-inverse" role="navigation">
+<nav class="navbar-default navbar-inverse" role="navigation">
 	<sec:ifLoggedIn>
 		<div class="container-fluid">
 			<!-- Collect the nav links, forms, and other content for toggling -->
@@ -36,6 +41,34 @@
 		</div><!-- /.container-fluid -->
 	</sec:ifNotLoggedIn>
 </nav>
+<sec:ifLoggedIn>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-2 col-sm-4 sidebar1">
+			<div class="logo">
+				<img src="http://lorempixel.com/output/people-q-g-64-64-1.jpg" class="img-responsive center-block" alt="Logo">
+			</div>
+			<br>
+			<div class="left-navigation">
+				<ul class="list">
+					<h5><strong>WHEREABOUTS</strong></h5>
+					<li>Home</li>
+					<li>Office</li>
+					<li>School</li>
+					<li>Gym</li>
+					<li>Art Class</li>
+					<li>Hike Club</li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-10 col-sm-8 main-content">
+			<!--Main content code to be written here -->
+			<h1></h1>
+			<h3></h3>
+		</div>
+	</div>
+</div>
+</sec:ifLoggedIn>
 <g:layoutBody/>
 </body>
 </html>

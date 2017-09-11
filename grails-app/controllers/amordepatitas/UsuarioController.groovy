@@ -55,7 +55,11 @@ class UsuarioController {
 
     @Secured(['permitAll'])
     def loginUsuario(){
-        return render(view: '../login/auth')
+        return render(view: '../login/auth', model:[message:'Ya puedes iniciar sesion!'])
     }
 
+    @Secured(['IS_AUTHENTICATED_REMEMBERED'])
+    def indexUsuario(){
+
+    }
 }

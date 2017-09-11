@@ -4,12 +4,8 @@
 <html>
 <head>
 	<meta name="layout" content="main"/>
-    <g:javascript src="jquery.min.js"/>
-    <g:javascript src="jquery-ui.min.js"/>
-	<g:javascript src="bootstrapvalidator.min.js"/>
-	<g:javascript src="bootstrap.min.js"/>
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-	<link rel="stylesheet" type="text/css" href="css/bootstrapvalidator.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrapvalidator.min.css" />
     <asset:stylesheet src="/usuario/indexRegistracion.css"/>
 </head>
 

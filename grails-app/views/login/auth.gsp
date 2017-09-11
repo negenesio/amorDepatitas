@@ -3,17 +3,17 @@
 <html>
 <head>
 	<asset:stylesheet src="application.css"/>
-	<asset:stylesheet src="/usuario/indexRegistracion.css"/>
+	<asset:stylesheet src="usuario/indexRegistracion.css"/>
 	<g:javascript src="jquery.min.js"/>
 	<g:javascript src="jquery-ui.min.js"/>
 	<g:javascript src="bootstrapvalidator.min.js"/>
 	<g:javascript src="bootstrap.min.js"/>
 	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="../css/bootstrapvalidator.min.css" />
+	<asset:stylesheet src="../usuario/indexRegistracion.css"/>
 </head>
 
 <body>
-%{--${message}--}%
 <div class="container">
 	<div class="row main">
 		<div class="main-login main-center">
@@ -21,6 +21,17 @@
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<label class="navbar-left pull-left header-title" style="font-family: 'Passion One', cursive; font-size: 30px; padding-left: 10px">Amor de Patitas</label><i class="fa fa-paw fa-1 pull-left header-title" aria-hidden="true"></i>
+
+				<g:if test="${message}">
+					<div class="collapse navbar-collapse">
+							<label style="font-size: 15px; color: #374b84">${message}</label>
+					</div>
+				</g:if>
+				<g:if test="${flash.message}">
+					<div class="collapse navbar-collapse">
+						<label style="font-size: 12px; color: #84373a">${flash.message}</label>
+					</div>
+				</g:if>
 					<form controller="login" action='/amorDePatitas/j_spring_security_check' method='POST' id='loginForm' class='navbar-form navbar-right pull-right' autocomplete='off'>
 
 						<div class="form-group">
