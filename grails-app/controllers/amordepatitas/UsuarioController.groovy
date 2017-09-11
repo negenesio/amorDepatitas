@@ -12,6 +12,10 @@ class UsuarioController {
 
     @Secured(['permitAll'])
     def createUsuario() {
+        println "-- createUsuario ---"
+        println "-- createUsuario ---"
+        println "-- createUsuario ---"
+        println "-- createUsuario ---"
         DateFormat sourceFormat = new SimpleDateFormat("yyyy-MM-dd");
         String dateAsString = params.fechaNacimiento
         Date fechaNacimiento = sourceFormat.parse(dateAsString)
@@ -29,7 +33,7 @@ class UsuarioController {
         if(!usuarioResult){
             return redirect(mapping: 'create_usuario_error')
         }
-        return redirect(mapping: 'create_usuario_index')
+        return redirect(mapping: 'login_usuario')
     }
 
     @Secured(['permitAll'])
@@ -54,8 +58,9 @@ class UsuarioController {
     }
 
     @Secured(['permitAll'])
-    def createUsuarioIndex(){
-        return render(view: "createUsuarioIndex")
+    def loginUsuario(){
+        String message = "Usuario creado existosamente, ya puedes iniciar sesion!."
+        render(view: "../login/auth" , model:[message: message])
     }
 
 }

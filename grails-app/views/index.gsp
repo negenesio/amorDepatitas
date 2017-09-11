@@ -10,7 +10,6 @@
 	<g:javascript src="bootstrap.min.js"/>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="css/bootstrapvalidator.min.css" />
-    <asset:stylesheet src="/usuario/indexRegistracion.css"/>
 </head>
 
 <body>

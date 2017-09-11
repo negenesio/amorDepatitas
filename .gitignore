@@ -23,6 +23,17 @@ Servers/*
 webserver/.settings/*
 webserver/cobertura.ser
 webserver/bin/
+org_springframework*
+org_eclipse*
+.asscache
+org_*
+groovyjarjaran*
+javassist_*
+com_google*
+grails_*
+javax_servlet*
+groovy_*
+jline_*
 
 .idea/*
 webserver/webserver-grailsPlugins.iml
