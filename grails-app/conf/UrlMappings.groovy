@@ -23,8 +23,8 @@ class UrlMappings {
             action = [GET: "createUsuarioError"]
         }
 
-        name create_usuario_index: "/usuario/create/index"(controller:"usuario", parseRequest: true){
-            action = [GET: "createUsuarioIndex"]
+        name login_usuario: "/usuario/loginUsuario"(controller:"usuario", parseRequest: true){
+            action = [GET: "loginUsuario"]
         }
 
         "/login/$action?"(controller: "login")

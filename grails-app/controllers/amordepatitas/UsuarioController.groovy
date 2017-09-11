@@ -29,7 +29,7 @@ class UsuarioController {
         if(!usuarioResult){
             return redirect(mapping: 'create_usuario_error')
         }
-        return redirect(mapping: 'create_usuario_index')
+        return redirect(mapping: 'login_usuario')
     }
 
     @Secured(['permitAll'])
@@ -54,8 +54,8 @@ class UsuarioController {
     }
 
     @Secured(['permitAll'])
-    def createUsuarioIndex(){
-        return render(view: "createUsuarioIndex")
+    def loginUsuario(){
+        return render(view: '../login/auth')
     }
 
 }

@@ -13,6 +13,20 @@ class UsuarioService {
 
     boolean createUsuario(SecUser usuario){
         SecRole rol = SecRole.findByAuthority("ROLE_USER")
+        if (usuario.hasErrors()) {
+            usuario.errors.allErrors.each {
+                println it
+            }
+//            LOG.error("[ERROR] [CREATE USUARIO - Usuario] - [ROL: ${rol.authority}] - [Usuario: ${usuario.username}]")
+            return false
+        }
+        if (rol.hasErrors()) {
+            rol.errors.allErrors.each {
+                println it
+            }
+//            LOG.error("[ERROR] [CREATE USUARIO - Usuario] - [ROL: ${rol.authority}] - [Usuario: ${usuario.username}]")
+            return false
+        }
         return create(usuario, rol)
     }
 
@@ -22,26 +36,9 @@ class UsuarioService {
     }
 
     boolean create(SecUser usuario, SecRole rol){
-        SecUserSecRole usuarioRoles = new SecUserSecRole(secRole: rol, secUser: usuario)
-        usuarioRoles.validate()
-        if (usuarioRoles.hasErrors()) {
-            usuarioRoles.errors.allErrors.each {
-               println it
-            }
-//            LOG.error("[ERROR] [CREATE USUARIO - UsuarioRoles] - [ROL: ${rol.authority}] - [Usuario: ${usuario.username}]")
-            return false
-        }
-
-        if (usuario.hasErrors()) {
-            usuario.errors.allErrors.each {
-                println it
-            }
-//            LOG.error("[ERROR] [CREATE USUARIO - Usuario] - [ROL: ${rol.authority}] - [Usuario: ${usuario.username}]")
-            return false
-        }
-
+        SecUserSecRole usuariosRoles = new SecUserSecRole(secRole: rol, secUser: usuario)
         usuario.save()
-        usuarioRoles.save()
+        usuariosRoles.save()
         LOG.info("[SUCCESS] [CREATE USUARIO] - [ROL: ${rol.authority}] - [Usuario: ${usuario.username}]")
         return true
     }
