@@ -27,6 +27,10 @@ class UrlMappings {
             action = [GET: "loginUsuario"]
         }
 
+        name mascota_create: "/mascota/createMascota"(controller: "mascota", parseRequest: true){
+            action = [POST: "createMascota"]
+        }
+
         "/login/$action?"(controller: "login")
         "/logout/$action?"(controller: "logout")
 

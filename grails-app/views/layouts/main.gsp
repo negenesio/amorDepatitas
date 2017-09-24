@@ -42,32 +42,39 @@
 	</sec:ifNotLoggedIn>
 </nav>
 <sec:ifLoggedIn>
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-md-2 col-sm-4 sidebar1">
-			<div class="logo">
-				<img src="http://lorempixel.com/output/people-q-g-64-64-1.jpg" class="img-responsive center-block" alt="Logo">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-2 col-sm-4 sidebar1">
+				<div class="logo">
+					<img src="http://lorempixel.com/output/people-q-g-64-64-1.jpg" class="img-responsive center-block" alt="Logo">
+				</div>
+				<br>
+				<div class="left-navigation">
+					<ul class="list">
+						<h5><strong>WHEREABOUTS</strong></h5>
+						<li><g:link style="color:white" controller="mascota" action="index">Mascotas</g:link></li>
+						<li><g:link style="color:white" controller="mascota" action="index">Office</g:link></li>
+						<li><g:link style="color:white" controller="mascota" action="index">School</g:link></li>
+						<li><g:link style="color:white" controller="mascota" action="index">Gym</g:link></li>
+						<li><g:link style="color:white" controller="mascota" action="index">Art Class</g:link></li>
+						<li><g:link style="color:white" controller="mascota" action="index">Hike Club</g:link></li>
+						<li> <a style="color:white" href="#" data-toggle="collapse" data-target="#mascotas"> <i class="fa fa-paw"></i> <span class="nav-label">Graphs</span> <span class="fa fa-chevron-left pull-right"></span> </a>
+							<ul class="sub-menu collapse list" id="mascotas">
+								<li><g:link style="color:white" controller="mascota" action="index">Nueva Mascota</g:link></li>
+								<li><g:link style="color:white" controller="mascota" action="index">Nueva Mascota</g:link></li>
+								<li><g:link style="color:white" controller="mascota" action="index">Nueva Mascota</g:link></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
 			</div>
-			<br>
-			<div class="left-navigation">
-				<ul class="list">
-					<h5><strong>WHEREABOUTS</strong></h5>
-					<li>Home</li>
-					<li>Office</li>
-					<li>School</li>
-					<li>Gym</li>
-					<li>Art Class</li>
-					<li>Hike Club</li>
-				</ul>
+			<div class="col-md-10 col-sm-8 main-content">
+				<!--Main content code to be written here -->
+				<h1></h1>
+				<h3></h3>
 			</div>
-		</div>
-		<div class="col-md-10 col-sm-8 main-content">
-			<!--Main content code to be written here -->
-			<h1></h1>
-			<h3></h3>
 		</div>
 	</div>
-</div>
 </sec:ifLoggedIn>
 <g:layoutBody/>
 </body>
