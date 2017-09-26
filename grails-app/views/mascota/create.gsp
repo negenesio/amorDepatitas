@@ -1,27 +1,20 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: negenesio
-  Date: 10/9/17
-  Time: 22:57
---%>
-
 <%@ page contentType="text/html;charset=UTF-8" %>
+@import 'font-awesome';
+
 <html>
 <head>
-    <meta name="layout" content="sinMenu"/>
-
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="../css/bootstrapvalidator.min.css" />
-    <asset:stylesheet src="../usuario/indexRegistracion.css"/>
-    <title></title>
+    <meta name="layout" content="main"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrapvalidator.min.css" />
+    <asset:stylesheet src="/usuario/indexRegistracion.css"/>
 </head>
 
 <body>
 <div class="container">
     <div class="row main">
         <div class="main-login main-center">
-            <center><h3 class="title">Registra tu Mascota!</h3></center>
-            <g:form name="form_registro_mascota" mapping="mascota_create" method="POST" >
+            <center><h3 class="title">Encuentra la pareja perfecta para tu Mascota!</h3></center>
+            <g:form name="form_registro" mapping="usuario_create" method="POST" >
                 <div class="form-group">
                     <label for="username" class="cols-sm-2 custom-padding">Usuario</label>
                     <div class="cols-sm-10">
@@ -92,5 +85,70 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        $('#form_registro').bootstrapValidator({
+            feedbackIcons: {
+                valid: 'fa fa-check-square-o',
+                invalid: 'fa fa-times',
+                validating: 'fa fa-clock-o'
+            },
+            fields: {
+                username: {
+                    validators: {
+                        remote: {
+                            type: 'POST',
+                            url: '/amorDePatitas/usuario/ajaxFindUsuario',
+                            message: 'El usuario ingresado ya existe.'
+                        },
+                        notEmpty: {
+                            message: 'Ingrese un usuario valido.'
+                        }
+                    }
+                },
+                email: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Email no puede estar vacio.'
+                        },
+                        emailAddress: {
+                            message: 'Ingrese una direccion de email valida.'
+                        },
+                        remote: {
+                            type: 'POST',
+                            url: '/amorDePatitas/usuario/ajaxFindEmail',
+                            message: 'El email ingresado ya existe.'
+                        }
+                    }
+                },
+                password: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Ingrese una constraseña valida.'
+                        }
+                    }
+                },
+                confirm:{
+                    validators: {
+                        identical: {
+                            field: 'password'
+                        },
+                        notEmpty: {
+                            message: 'Ingrese confirmacion de contraseña.'
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
 </body>
 </html>
+%{--isaacn.182@gmail.com--}%
+%{--Isaacn Nassar--}%
+
+%{--eric.dominguez@live.com.ar--}%
+%{--Eric Dominguez--}%
+
+%{--ignaciofernandez85@gmail.com--}%
+%{--Ignacio Fernandez--}%

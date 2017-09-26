@@ -68,6 +68,5 @@ grails.project.dependency.resolution = {
         runtime ":jquery:1.11.1"
         runtime ':font-awesome-resources:4.3.0.1'
         compile ':spring-security-core:2.0-RC4'
-    
     }
 }

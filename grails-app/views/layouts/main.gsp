@@ -9,22 +9,69 @@
 	<g:javascript src="jquery-ui.min.js"/>
 	<g:javascript src="bootstrapvalidator.min.js"/>
 	<g:javascript src="bootstrap.min.js"/>
+	<script src="../js/bootsnav.js"></script>
+	<link href="../css/animate.css" rel="stylesheet">
+	<link href="../css/bootsnav.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../css/style.css"/>
+	<g:javascript src="script.js"/>
+
 	<% def springSecurityService %>
 	<g:layoutHead/>
 </head>
 <body>
-<nav class="navbar-default navbar-inverse" role="navigation">
 	<sec:ifLoggedIn>
-		<div class="container-fluid">
-			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				<label class="navbar-left pull-left header-title" style="font-family: 'Passion One', cursive;">Amor de Patitas</label><i class="fa fa-paw fa-4 pull-left header-title" aria-hidden="true"></i>
-				<label class="navbar-right pull-right header-title" style="text-align: right; font-family: 'Passion One', cursive;">${sec.loggedInUserInfo(field:'username')} <g:link controller="logout">Desconectarse</g:link></label>
-			</div><!-- /.navbar-collapse -->
-		</div><!-- /.container-fluid -->
+		%{--<nav class="navbar-default navbar-inverse" role="navigation">--}%
+			%{--<div class="container-fluid">--}%
+				%{--<!-- Collect the nav links, forms, and other content for toggling -->--}%
+				%{--<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">--}%
+					%{--<label class="navbar-left pull-left header-title" style="font-family: 'Passion One', cursive;">Amor de Patitas</label><i class="fa fa-paw fa-4 pull-left header-title" aria-hidden="true"></i>--}%
+					%{--<label class="navbar-right pull-right header-title" style="text-align: right; font-family: 'Passion One', cursive;">${sec.loggedInUserInfo(field:'username')} <g:link controller="logout">Desconectarse</g:link></label>--}%
+				%{--</div><!-- /.navbar-collapse -->--}%
+			%{--</div><!-- /.container-fluid -->--}%
+		%{--</nav>--}%
+		<nav class="navbar navbar-inverse navbar-sidebar bootsnav">
+			<div class="container">
+				<!-- Start Header Navigation -->
+				<div class="navbar-header">
+				<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<label class="navbar-left pull-left header-title" style="font-family: 'Passion One', cursive;">Amor de Patitas</label><i class="fa fa-paw fa-4 pull-left header-title" aria-hidden="true"></i>
+						<br>
+					</div>
+					<label class="header-title pull-left" style="color: #5e5e5e;font-family: 'Passion One', cursive; font-size: 15px">Usuario: ${sec.loggedInUserInfo(field:'username')}</label>
+				</div>
+				<!-- End Header Navigation -->
+
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="navbar-menu">
+					<!-- Start Menu -->
+					<ul class="nav navbar-nav navbar-inverse" data-in="fadeInDown" data-out="fadeOutUp">
+						<li class="dropdown megamenu-fw">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Mascotas</a>
+							<ul class="dropdown-menu megamenu-content animated fadeOutUp" role="menu" style="display: none; opacity: 1;">
+								<li>
+									<div class="row">
+										<div class="col-menu col-md-3">
+												<ul class="menu-col">
+													<li><a href="#">Crear</a></li>
+													<li><a href="#">Buscar</a></li>
+													<li><a href="#">Postular</a></li>
+												</ul>
+										</div>
+									</div><!-- end row -->
+								</li>
+							</ul>
+						</li>
+						<li class="nav-divider"></li>
+						<li><g:link controller="logout">Desconectarse</g:link></li>
+					</ul>
+					<!-- End Menu -->
+				</div><!-- /.navbar-collapse -->
+			</div>
+		</nav>
 	</sec:ifLoggedIn>
 	<sec:ifNotLoggedIn>
-		<div class="container-fluid">
+		<div class="container-fluid" style="background-color: black">
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<label class="navbar-left pull-left header-title" style="font-family: 'Passion One', cursive;">Amor de Patitas</label><i class="fa fa-paw fa-4 pull-left header-title" aria-hidden="true"></i>
@@ -40,42 +87,6 @@
 			</div><!-- /.navbar-collapse -->
 		</div><!-- /.container-fluid -->
 	</sec:ifNotLoggedIn>
-</nav>
-<sec:ifLoggedIn>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-2 col-sm-4 sidebar1">
-				<div class="logo">
-					<img src="http://lorempixel.com/output/people-q-g-64-64-1.jpg" class="img-responsive center-block" alt="Logo">
-				</div>
-				<br>
-				<div class="left-navigation">
-					<ul class="list">
-						<h5><strong>WHEREABOUTS</strong></h5>
-						<li><g:link style="color:white" controller="mascota" action="index">Mascotas</g:link></li>
-						<li><g:link style="color:white" controller="mascota" action="index">Office</g:link></li>
-						<li><g:link style="color:white" controller="mascota" action="index">School</g:link></li>
-						<li><g:link style="color:white" controller="mascota" action="index">Gym</g:link></li>
-						<li><g:link style="color:white" controller="mascota" action="index">Art Class</g:link></li>
-						<li><g:link style="color:white" controller="mascota" action="index">Hike Club</g:link></li>
-						<li> <a style="color:white" href="#" data-toggle="collapse" data-target="#mascotas"> <i class="fa fa-paw"></i> <span class="nav-label">Graphs</span> <span class="fa fa-chevron-left pull-right"></span> </a>
-							<ul class="sub-menu collapse list" id="mascotas">
-								<li><g:link style="color:white" controller="mascota" action="index">Nueva Mascota</g:link></li>
-								<li><g:link style="color:white" controller="mascota" action="index">Nueva Mascota</g:link></li>
-								<li><g:link style="color:white" controller="mascota" action="index">Nueva Mascota</g:link></li>
-							</ul>
-						</li>
-					</ul>
-				</div>
-			</div>
-			<div class="col-md-10 col-sm-8 main-content">
-				<!--Main content code to be written here -->
-				<h1></h1>
-				<h3></h3>
-			</div>
-		</div>
-	</div>
-</sec:ifLoggedIn>
 <g:layoutBody/>
 </body>
 </html>
