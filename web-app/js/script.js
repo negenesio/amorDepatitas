@@ -1,4 +1,4 @@
-( function( $ ) {
+( function(  ) {
 $( document ).ready(function() {
 $('#cssmenu li.has-sub>a').on('click', function(){
 		$(this).removeAttr('href');
@@ -62,4 +62,4 @@ $('#cssmenu li.has-sub>a').on('click', function(){
 	    return l;
 	}
 });
-} )( jQuery );
+} )( );

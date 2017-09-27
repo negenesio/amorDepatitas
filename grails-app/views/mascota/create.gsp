@@ -4,38 +4,39 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="css/bootstrapvalidator.min.css" />
-    <asset:stylesheet src="/usuario/indexRegistracion.css"/>
+
+    <link rel="stylesheet" type="text/css" href="../css/bootstrapvalidator.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
+    <asset:stylesheet src="usuario/indexRegistracion.css"/>
 </head>
 
 <body>
 <div class="container">
     <div class="row main">
         <div class="main-login main-center">
-            <center><h3 class="title">Encuentra la pareja perfecta para tu Mascota!</h3></center>
-            <g:form name="form_registro" mapping="usuario_create" method="POST" >
+            <center><h3 class="title">Registra tu mascota es muy simple!</h3></center>
+            <g:form name="form_registro" mapping="mascota_create" method="POST" >
                 <div class="form-group">
-                    <label for="username" class="cols-sm-2 custom-padding">Usuario</label>
+                    <label for="nombre_mascota" class="cols-sm-2 custom-padding">Nombre Mascota</label>
                     <div class="cols-sm-10">
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="username" id="username"  placeholder="Ingrese su Usuario"  required/>
+                            <span class="input-group-addon"><img src="../images/icons/dog-bone.png"/></span>
+                            <input type="text" class="form-control" name="nombre_mascota" id="nombre_mascota"  placeholder="Ingrese el nombre de su mascota"  required/>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="name" class="cols-sm-2">Nombre y Apellido</label>
-                    <div class="cols-sm-10">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="name" id="name"  placeholder="Ingrese su Nombre Completo" required/>
-                        </div>
+                    <label for="nombre_mascota" class="cols-sm-2 custom-padding">¿Conoces la fecha de nacimiento?</label>
+                    <div class="cols-sm-10" style="padding-left: 30px">
+                            <input type="radio" id="no_fecha"  name="radio-group" value="true">
+                            <label style="padding-left: 10px; padding-right: 70px" for="no_fecha"> Si</label>
+                            <input type="radio" id="si_fecha" name="radio-group" value="false">
+                            <label style="padding-left: 10px" for="si_fecha"> No</label>
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" id="fecha_nacimiento">
                     <label for="fechaNacimiento" class="cols-sm-2">Fecha Nacimiento</label>
                     <div class="cols-sm-10">
                         <div class="input-group">
@@ -57,15 +58,6 @@
 
 
 
-                <div class="form-group">
-                    <label for="password" class="cols-sm-2">Contraseña</label>
-                    <div class="cols-sm-10">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                            <input type="password" class="form-control" name="password" id="password"  placeholder="Ingrese su Contraseña"  required/>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="form-group">
                     <label for="confirm" class="cols-sm-2">Repetir Contraseña</label>
@@ -87,59 +79,7 @@
 </div>
 <script>
     $(document).ready(function() {
-        $('#form_registro').bootstrapValidator({
-            feedbackIcons: {
-                valid: 'fa fa-check-square-o',
-                invalid: 'fa fa-times',
-                validating: 'fa fa-clock-o'
-            },
-            fields: {
-                username: {
-                    validators: {
-                        remote: {
-                            type: 'POST',
-                            url: '/amorDePatitas/usuario/ajaxFindUsuario',
-                            message: 'El usuario ingresado ya existe.'
-                        },
-                        notEmpty: {
-                            message: 'Ingrese un usuario valido.'
-                        }
-                    }
-                },
-                email: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Email no puede estar vacio.'
-                        },
-                        emailAddress: {
-                            message: 'Ingrese una direccion de email valida.'
-                        },
-                        remote: {
-                            type: 'POST',
-                            url: '/amorDePatitas/usuario/ajaxFindEmail',
-                            message: 'El email ingresado ya existe.'
-                        }
-                    }
-                },
-                password: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Ingrese una constraseña valida.'
-                        }
-                    }
-                },
-                confirm:{
-                    validators: {
-                        identical: {
-                            field: 'password'
-                        },
-                        notEmpty: {
-                            message: 'Ingrese confirmacion de contraseña.'
-                        }
-                    }
-                }
-            }
-        });
+
     });
 </script>
 </body>

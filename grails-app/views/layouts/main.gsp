@@ -5,6 +5,7 @@
 	<asset:stylesheet src="application.css"/>
 	<asset:stylesheet src="usuario/indexRegistracion.css"/>
 	<asset:stylesheet src="sidebar.css"/>
+	<g:javascript src="script.js"/>
 	<g:javascript src="jquery.min.js"/>
 	<g:javascript src="jquery-ui.min.js"/>
 	<g:javascript src="bootstrapvalidator.min.js"/>
@@ -13,7 +14,7 @@
 	<link href="../css/animate.css" rel="stylesheet">
 	<link href="../css/bootsnav.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="../css/style.css"/>
-	<g:javascript src="script.js"/>
+
 
 	<% def springSecurityService %>
 	<g:layoutHead/>
@@ -53,7 +54,7 @@
 									<div class="row">
 										<div class="col-menu col-md-3">
 												<ul class="menu-col">
-													<li><a href="#">Crear</a></li>
+													<li><g:link controller="mascota" action="createMascota">Crear</g:link></li>
 													<li><a href="#">Buscar</a></li>
 													<li><a href="#">Postular</a></li>
 												</ul>
