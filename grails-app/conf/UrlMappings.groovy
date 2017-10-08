@@ -27,9 +27,22 @@ class UrlMappings {
             action = [GET: "loginUsuario"]
         }
 
-        name mascota_create: "/mascotas/create"(controller: "mascota", parseRequest: true){
-            action = [POST: "create"]
+        name mascota_create_index: "/mascotas/create/index"(controller: "mascota", parseRequest: true){
+            action = [GET: "create"]
         }
+
+        name mascota_create: "/mascotas/createMascota"(controller: "mascota", parseRequest: true){
+            action = [POST: "createMascota"]
+        }
+
+        name mascota_create_upload: "/mascotas/uploadMascota"(controller: "mascota", parseRequest: true){
+            action = [POST: "uploadMascota"]
+        }
+
+        name upload_imagen: "/mascotas/uploadImagen"(controller: "mascota", parseRequest: true){
+            action = [POST: "uploadImagen"]
+        }
+
 
         "/login/$action?"(controller: "login")
         "/logout/$action?"(controller: "logout")

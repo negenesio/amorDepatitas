@@ -1,13 +1,16 @@
 package amordepatitas
 
+import amordepatitas.seguridad.SecUser
+
 class Imagenes {
 
     Mascota mascota
     String nombre
     String type
     byte[] imagen
+    Date fechaCreacion = new Date()
 
     static constraints = {
-        imagen contentType: ['png','jpg']
+        imagen (contentType: ['png','jpg', 'gif'], sqlType: 'longblob', maxSize: 1024*50)
     }
 }
