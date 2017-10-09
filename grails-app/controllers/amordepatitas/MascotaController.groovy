@@ -21,11 +21,15 @@ class MascotaController {
 
     @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def createMascota() {
+        println "----PARAMS--->"
+        println params
+        println "----PARAMS--->"
         Map model = [
                 nombre_mascota : params.nombre_mascota,
                 fechaNacimiento : params.fechaNacimiento,
                 raza : params.raza,
-                secUser : springSecurityService.principal.id
+                secUser : springSecurityService.principal.id,
+                sexo: params.sexo
         ]
         def result = mascotaService.createMascota(model)
         println "----save--->"
@@ -42,9 +46,9 @@ class MascotaController {
 
     @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def uploadImagen() {
-        println "---->"
+        println "----IMAGEN>"
         println params
-        println "---->"
+        println "----IMAGEN>"
         Mascota mascota = Mascota.findById(params."mascota")
         def file = params."input-b8[]"
         byte[] fileBytes = file.bytes

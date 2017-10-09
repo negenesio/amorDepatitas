@@ -9,9 +9,21 @@
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
     <asset:stylesheet src="usuario/indexRegistracion.css"/>
     <style>
-    .new-select {
+        .btn-default.btn-on.active{background-color: #0f23b7;color: white;}
+        .btn-default.btn-off.active{background-color: #DA4F49;color: white;}
+
+        .btn-default.btn-on-1.active{background-color: #006FFC;color: white;}
+        .btn-default.btn-off-1.active{background-color: #DA4F49;color: white;}
+
+        .btn-default.btn-on-2.active{background-color: #00D590;color: white;}
+        .btn-default.btn-off-2.active{background-color: #A7A7A7;color: white;}
+
+        .btn-default.btn-on-3.active{color: #5BB75B;font-weight:bolder;}
+        .btn-default.btn-off-3.active{color: #DA4F49;font-weight:bolder;}
+
+        .btn-default.btn-on-4.active{background-color: #006FFC;color: #5BB75B;}
+        .btn-default.btn-off-4.active{background-color: #DA4F49;color: #DA4F49;}
         background-color: #ccc;
-    }
     </style>
 </head>
 
@@ -52,6 +64,21 @@
                                     <option value="${it?.id}">${it?.descripcion}</option>
                                 </g:each>
                             </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="sexo" class="cols-sm-2 custom-padding">Sexo</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-venus-mars" aria-hidden="true"></i></span>
+                            <div class="btn-group" id="sexo" data-toggle="buttons">
+                                <label class="btn btn-default btn-on btn-sm active">
+                                    <input type="radio" value="macho" name="sexo" checked="checked">MACHO</label>
+                                <label class="btn btn-default btn-off btn-sm ">
+                                    <input type="radio" value="hembra" name="sexo">HEMBRA</label>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -16,7 +16,7 @@ class MascotaService {
         Raza raza = Raza.findById(mascotaParams.raza.toLong())
         Date fechaNacimiento = Date.parse('yyyy-MM-dd', mascotaParams.fechaNacimiento)
         Mascota mascota = new Mascota(nombre: mascotaParams.nombre_mascota, raza: raza,
-                fechaNacimiento: fechaNacimiento, secUser: secUser)
+                fechaNacimiento: fechaNacimiento, secUser: secUser, sexo: mascotaParams.sexo)
         mascota.save()
         if(mascota.hasErrors()){
             println "---->> ERROR --->>>"
