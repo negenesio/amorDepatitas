@@ -124,9 +124,9 @@ log4j = {
                 file:"amorDePatitas/app.log")
     }
     root {
-        info 'stdout'
-        info 'stacktrace'
-        info 'file'
+        error 'stdout'
+        error 'stacktrace'
+        error 'file'
     }
 
     debug 'org.springframework.security'
