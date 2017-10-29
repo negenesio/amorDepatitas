@@ -39,6 +39,9 @@ class UrlMappings {
             action = [POST: "uploadMascota"]
         }
 
+        name usuario_index: "/usuario/index"(controller: "usuario", parseRequest: true){
+            action = [GET: "indexUsuario"]
+        }
         name upload_imagen: "/mascotas/uploadImagen"(controller: "mascota", parseRequest: true){
             action = [POST: "uploadImagen"]
         }

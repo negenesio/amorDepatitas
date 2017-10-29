@@ -1,10 +1,12 @@
 package amordepatitas
 
+import amordepatitas.seguridad.SecRole
 import grails.plugin.springsecurity.annotation.Secured
 
 class MascotaController {
 
     def mascotaService, springSecurityService
+    RoleService roleService
 
     @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def index() {
@@ -12,31 +14,25 @@ class MascotaController {
 
     @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def uploadMascota() {
-        println "---------> "
-        println params
-        println "---------> "
+        println "---- KERO KERO KERO KERO KERO -------"
         return render(view:"../usuario/indexUsuario.gsp")
     }
 
 
     @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def createMascota() {
-        println "----PARAMS--->"
-        println params
-        println "----PARAMS--->"
+        Long userId = springSecurityService.principal.id.toLong()
         Map model = [
                 nombre_mascota : params.nombre_mascota,
-                fechaNacimiento : params.fechaNacimiento,
+                fecha_nacimiento : params.fecha_nacimiento,
                 raza : params.raza,
-                secUser : springSecurityService.principal.id,
-                sexo: params.sexo
+                secUser : userId,
+                sexo_mascota: params.sexo_mascota
         ]
-        def result = mascotaService.createMascota(model)
-        println "----save--->"
-        println result
-        println "----save--->"
-        model << [mascotaId: result]
-        return render(view:"createMascota", model:model)
+        def resultMascota = mascotaService.createMascota(model)
+        roleService.addRoleUser('ROLE_MASCOTA', userId)
+
+        return render(resultMascota)
     }
 
     @Secured(['ROLE_ADMIN', 'ROLE_USER'])
@@ -46,9 +42,6 @@ class MascotaController {
 
     @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def uploadImagen() {
-        println "----IMAGEN>"
-        println params
-        println "----IMAGEN>"
         Mascota mascota = Mascota.findById(params."mascota")
         def file = params."input-b8[]"
         byte[] fileBytes = file.bytes
@@ -56,12 +49,10 @@ class MascotaController {
         Imagenes imagenen = new Imagenes(mascota: mascota, imagen: fileBytes, type: contentType, nombre: file.getOriginalFilename())
         imagenen.save()
         if(imagenen.hasErrors()){
-            println "---->> ERROR --->>>"
             imagenen.errors.allErrors.each {
                 println it
             }
-            println "---->> ERROR --->>>"
-            return false
+            return render("false")
         }
         return render("true")
     }

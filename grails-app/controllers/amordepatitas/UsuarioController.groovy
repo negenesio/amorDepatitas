@@ -1,6 +1,7 @@
 package amordepatitas
 
 import amordepatitas.seguridad.SecUser
+import grails.plugin.springsecurity.SpringSecurityService
 import org.codehaus.groovy.grails.web.json.JSONObject
 import grails.plugin.springsecurity.annotation.Secured
 import java.text.DateFormat
@@ -9,6 +10,7 @@ import java.text.SimpleDateFormat
 class UsuarioController {
 
     UsuarioService usuarioService
+    SpringSecurityService springSecurityService
 
     @Secured(['permitAll'])
     def createUsuario() {
@@ -22,6 +24,7 @@ class UsuarioController {
                 email: params.email,
                 username: params.username,
                 dateCreated: new Date(),
+                sexo: params.sexo,
                 enabled: true
         )
 
@@ -60,6 +63,10 @@ class UsuarioController {
 
     @Secured(['IS_AUTHENTICATED_REMEMBERED'])
     def indexUsuario(){
-
+        SecUser user = SecUser.findById(springSecurityService.principal.id.toLong())
+        List<Mascota> mascotaList = Mascota.findAllBySecUser(user)
+        if(mascotaList) {
+            return [mascotas: mascotaList]
+        }
     }
 }

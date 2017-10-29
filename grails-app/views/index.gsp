@@ -55,6 +55,20 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label for="sexo" class="cols-sm-2 custom-padding">Sexo</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-venus-mars" aria-hidden="true"></i></span>
+                            <div class="btn-group" id="sexo" data-toggle="buttons">
+                                <label class="btn btn-default btn-on btn-sm active">
+                                    <input type="radio" value="masculino" name="sexo" checked="checked">MASCULINO</label>
+                                <label class="btn btn-default btn-off btn-sm ">
+                                    <input type="radio" value="femenino" name="sexo">FEMENINO</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 
                 <div class="form-group">

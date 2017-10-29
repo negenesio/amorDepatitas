@@ -14,6 +14,7 @@ class BootStrap {
 
         def userRole = SecRole.findByAuthority('ROLE_USER') ?: new SecRole(authority: 'ROLE_USER').save(failOnError: true)
         def adminRole = SecRole.findByAuthority('ROLE_ADMIN') ?: new SecRole(authority: 'ROLE_ADMIN').save(failOnError: true)
+        def mascotaRole = SecRole.findByAuthority('ROLE_MASCOTA') ?: new SecRole(authority: 'ROLE_MASCOTA').save(failOnError: true)
 
         def adminUser = SecUser.findByUsername('admin') ?: new SecUser(
                 username: 'admin',
@@ -21,10 +22,11 @@ class BootStrap {
                 email: 'nicolas.gnesio@mercadolibre.com',
                 dateBirth: new Date(),
                 password: 'admin',
+                sexo: 'masculino',
                 enabled: true).save(failOnError: true)
 
         if (!adminUser.authorities.contains(adminRole)) {
-            SecUserSecRole.create adminUser, adminRole
+            SecUserSecRole.create(adminUser, adminRole)
         }
 
         def razas = ["Affenpinscher", "Airedale Terrier", "Akita","Akita americano","Alaskan Husky","Alaskan Malamute",

@@ -14,6 +14,7 @@ class SecUser {
 	boolean accountExpired
 	boolean accountLocked
 	boolean passwordExpired
+	String sexo
 
 	static transients = ['springSecurityService']
 

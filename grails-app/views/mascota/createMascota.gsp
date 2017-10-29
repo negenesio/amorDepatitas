@@ -31,6 +31,9 @@
         $("#input-b8").fileinput({
             rtl: true,
             uploadUrl:"uploadImagen",
+            showPreview: true,
+            showCancel: false,
+            language: "es",
             uploadExtraData:{mascota: mascota},
             maxFileCount: 3,
             allowedFileExtensions: ["jpg", "png", "gif"]

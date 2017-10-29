@@ -12,6 +12,8 @@
 	<g:javascript src="bootstrap.min.js"/>
 	<g:javascript src="bootstrap-select.min.js"/>
 	<g:javascript src="fileinput.min.js"/>
+	%{--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.5/js/locales/LANG.js"></script>--}%
+	<g:javascript src="locales/es.js"/>
 	<script src="../js/bootsnav.js"></script>
 	<link href="../css/animate.css" rel="stylesheet">
 	<link href="../css/bootsnav.css" rel="stylesheet">
@@ -19,6 +21,23 @@
 	<link rel="stylesheet" type="text/css" href="../css/bootstrap-select.min.css"/>
 	<link href="../css/fileinput.min.css" rel="stylesheet">
 	<link href="../css/fileinput-rtl.min.css" rel="stylesheet">
+	<style>
+	.btn-default.btn-on.active{background-color: #0f23b7;color: white;}
+	.btn-default.btn-off.active{background-color: #DA4F49;color: white;}
+
+	.btn-default.btn-on-1.active{background-color: #006FFC;color: white;}
+	.btn-default.btn-off-1.active{background-color: #DA4F49;color: white;}
+
+	.btn-default.btn-on-2.active{background-color: #00D590;color: white;}
+	.btn-default.btn-off-2.active{background-color: #A7A7A7;color: white;}
+
+	.btn-default.btn-on-3.active{color: #5BB75B;font-weight:bolder;}
+	.btn-default.btn-off-3.active{color: #DA4F49;font-weight:bolder;}
+
+	.btn-default.btn-on-4.active{background-color: #006FFC;color: #5BB75B;}
+	.btn-default.btn-off-4.active{background-color: #DA4F49;color: #DA4F49;}
+	background-color: #ccc;
+	</style>
 	<% def springSecurityService %>
 	<g:layoutHead/>
 </head>
@@ -50,7 +69,10 @@
 												<ul class="menu-col">
 													<li><g:link controller="mascota" action="createIndex">Crear</g:link></li>
 													<li><a href="#">Buscar</a></li>
+													<sec:ifAnyGranted roles='ROLE_MASCOTA'>
 													<li><a href="#">Postular</a></li>
+													</sec:ifAnyGranted>
+													%{--</g:if>--}%
 												</ul>
 										</div>
 									</div><!-- end row -->
