@@ -1,6 +1,5 @@
 package amordepatitas
 
-import amordepatitas.seguridad.SecRole
 import grails.plugin.springsecurity.annotation.Secured
 
 class MascotaController {
@@ -14,7 +13,6 @@ class MascotaController {
 
     @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def uploadMascota() {
-        println "---- KERO KERO KERO KERO KERO -------"
         return render(view:"../usuario/indexUsuario.gsp")
     }
 
@@ -46,14 +44,15 @@ class MascotaController {
         def file = params."input-b8[]"
         byte[] fileBytes = file.bytes
         String contentType = file.contentType
-        Imagenes imagenen = new Imagenes(mascota: mascota, imagen: fileBytes, type: contentType, nombre: file.getOriginalFilename())
-        imagenen.save()
-        if(imagenen.hasErrors()){
-            imagenen.errors.allErrors.each {
-                println it
+        Imagenes imagen = new Imagenes(mascota: mascota, imagen: fileBytes, type: contentType, nombre: file.getOriginalFilename())
+        imagen.save()
+        if(imagen.hasErrors()){
+            imagen.errors.allErrors.each {
+                log.error("[IMAGEN UPLOAD FAIL] ["+it+".]")
             }
             return render("false")
         }
+        log.info("[IMAGEN UPLOAD SUCCESS] [IMAGEN: "+imagen.id+"] [MASCOTA: "+mascota.id+"]")
         return render("true")
     }
 }

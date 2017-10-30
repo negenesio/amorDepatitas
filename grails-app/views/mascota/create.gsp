@@ -88,8 +88,8 @@
                 <!-- note that your input must just set the `rtl` data property of the plugin or in your javascript code -->
                     <input id="input-b8" name="input-b8[]" multiple type="file">
                 </div>
+                <input type="hidden" id="mascota" value=""/>
                 <div class="form-group ">
-                    <input type="submit" id="upload_button" class="btn btn-info btn-block login" value="Cargar Imagenes"/>
                     <label id="omitir" name="omitir" class="btn btn-error btn-block login" style="background-color: #d6c4bb">Omitir</label>
                 </div>
             </g:form>
@@ -100,19 +100,9 @@
     $(document).on('ready', function() {
         $("#upload_images").hide();
         $("#upload_button").hide();
-        var mascota = '';
-        $("#input-b8").fileinput({
-            rtl: true,
-            uploadUrl:"uploadImagen",
-            showPreview: true,
-            showCancel: false,
-            language: "es",
-            uploadExtraData:{mascota: mascota},
-            maxFileCount: 3,
-            allowedFileExtensions: ["jpg", "png", "gif"]
-        });
 
         $('#input-b8').on('fileloaded', function(event, file, previewId, index, reader) {
+            $("#mascota").val($("#mascota_id_created").text());
             $("#upload_button").show();
         });
 
@@ -120,11 +110,28 @@
             window.location.href = "/amorDePatitas/usuario/index";
         });
 
+        $("#omitir").click(function(){
+            window.location.href = "/amorDePatitas/usuario/index";
+        });
+
     });
     function createMascota() {
+        $("#input-b8").fileinput({
+            rtl: true,
+            uploadUrl:"uploadImagen",
+            showPreview: true,
+            showCancel: false,
+            language: "es",
+            uploadExtraData:{mascota: getMascotaId()},
+            maxFileCount: 3,
+            allowedFileExtensions: ["jpg", "png", "gif"]
+        });
         $("#upload_images").show();
-        mascota = $("#mascota_id_created").text();
         $("#registro_mascota").hide();
+    }
+
+    function getMascotaId() {
+        return $("#mascota_id_created").text();
     }
 
 </script>

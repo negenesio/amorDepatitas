@@ -12,7 +12,6 @@
 	<g:javascript src="bootstrap.min.js"/>
 	<g:javascript src="bootstrap-select.min.js"/>
 	<g:javascript src="fileinput.min.js"/>
-	%{--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.5/js/locales/LANG.js"></script>--}%
 	<g:javascript src="locales/es.js"/>
 	<script src="../js/bootsnav.js"></script>
 	<link href="../css/animate.css" rel="stylesheet">
@@ -68,8 +67,8 @@
 										<div class="col-menu col-md-3">
 												<ul class="menu-col">
 													<li><g:link controller="mascota" action="createIndex">Crear</g:link></li>
-													<li><a href="#">Buscar</a></li>
 													<sec:ifAnyGranted roles='ROLE_MASCOTA'>
+													<li><a href="#">Buscar</a></li>
 													<li><a href="#">Postular</a></li>
 													</sec:ifAnyGranted>
 													%{--</g:if>--}%

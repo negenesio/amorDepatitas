@@ -124,15 +124,14 @@ log4j = {
                 file:"amorDePatitas/app.log")
     }
     root {
-        error 'stdout'
-        error 'stacktrace'
-        error 'file'
+        info 'stdout'
+        info 'stacktrace'
+        info 'file'
     }
 
     debug 'org.springframework.security'
 
-    error   'org.codehaus.groovy.grails.web.servlet',        // controllers
-            'org.codehaus.groovy.grails.web.pages',          // GSP
+    error   'org.codehaus.groovy.grails.web.pages',          // GSP
             'org.codehaus.groovy.grails.web.sitemesh',       // layouts
             'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
             'org.codehaus.groovy.grails.web.mapping',        // URL mapping
@@ -141,16 +140,10 @@ log4j = {
             'org.codehaus.groovy.grails.orm.hibernate',      // hibernate integration
             'org.springframework',
             'org.hibernate',
-            'net.sf.ehcache.hibernate'
+            'net.sf.ehcache.hibernate',
             'org.springframework.security'
 
-    warn    'org.springframework',
-            'org.hibernate',
-            'grails.plugins.springsecurity',
-            'groovyx.net.http'
-            'org.springframework.security'
-
-    all     'grails.app'
+    info    'org.codehaus.groovy.grails.web.servlet'        // controllers
 
 }
 
