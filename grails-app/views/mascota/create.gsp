@@ -4,10 +4,7 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-
-    <link rel="stylesheet" type="text/css" href="../css/bootstrapvalidator.min.css" />
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
-    <asset:stylesheet src="usuario/indexRegistracion.css"/>
+    <asset:stylesheet src="indexRegistracion.css"/>
     <style>
     .upload-file{
         padding-top: -20px;
@@ -20,7 +17,7 @@
     <div class="container" id="registro_mascota">
         <div class="row main">
             <div class="main-login main-center">
-                <center><h3 class="title">Registra tu mascota es muy simple!</h3></center>
+                <center><h3 class="header-title">Registra tu mascota es muy simple!</h3></center>
                 <g:formRemote name="form_registro" id="form_registro" on404="alert('not found!')" update="mascota_id_created"
                               url="[controller: 'mascota', action:'createMascota']" onComplete="createMascota()">
                 <div name="mascota_id_created" id="mascota_id_created"></div>
@@ -66,9 +63,9 @@
                                 <span class="input-group-addon"><i class="fa fa-venus-mars" aria-hidden="true"></i></span>
                                 <div class="btn-group" id="sexo" data-toggle="buttons">
                                     <label class="btn btn-default btn-on btn-sm active">
-                                        <input type="radio" value="macho" name="sexo_mascota" checked="checked">MACHO</label>
+                                        <input type="radio" value="MACHO" name="sexo_mascota" checked="checked">MACHO</label>
                                     <label class="btn btn-default btn-off btn-sm ">
-                                        <input type="radio" value="hembra" name="sexo_mascota">HEMBRA</label>
+                                        <input type="radio" value="HEMBRA" name="sexo_mascota">HEMBRA</label>
                                 </div>
                             </div>
                         </div>
@@ -83,7 +80,7 @@
     <div class="container" id="upload_images">
         <div class="row main upload-file">
             <g:form name="form_registro" mapping="mascota_create_upload" method="POST" >
-            <center><h3 class="title">Ya esta casi listo, solo faltan las fotos!</h3></center>
+            <center><h3 class="header-title">Ya esta casi listo, solo faltan las fotos!</h3></center>
                 <div dir=rtl class="file-loading"> <!-- note the direction if you want to display file-loading indicator -->
                 <!-- note that your input must just set the `rtl` data property of the plugin or in your javascript code -->
                     <input id="input-b8" name="input-b8[]" multiple type="file">
@@ -110,6 +107,11 @@
             window.location.href = "/amorDePatitas/usuario/index";
         });
 
+        $('#input-b8').on('filebatchuploaderror', function(event, files, extra) {
+            window.location.href = "/amorDePatitas/usuario/index";
+        });
+
+
         $("#omitir").click(function(){
             window.location.href = "/amorDePatitas/usuario/index";
         });
@@ -118,7 +120,7 @@
     function createMascota() {
         $("#input-b8").fileinput({
             rtl: true,
-            uploadUrl:"uploadImagen",
+            uploadUrl:"/amorDePatitas/imagenes/uploadImagen",
             showPreview: true,
             showCancel: false,
             language: "es",

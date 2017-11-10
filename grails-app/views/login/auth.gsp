@@ -3,14 +3,14 @@
 <html>
 <head>
 	<asset:stylesheet src="application.css"/>
-	<asset:stylesheet src="usuario/indexRegistracion.css"/>
+	<asset:stylesheet src="bootstrap.min.css"/>
+	<asset:stylesheet src="bootstrapvalidator.min.css"/>
+	<asset:stylesheet src="indexRegistracion.css"/>
 	<g:javascript src="jquery.min.js"/>
 	<g:javascript src="jquery-ui.min.js"/>
 	<g:javascript src="bootstrapvalidator.min.js"/>
 	<g:javascript src="bootstrap.min.js"/>
-	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
-	<link rel="stylesheet" type="text/css" href="../css/bootstrapvalidator.min.css" />
-	<asset:stylesheet src="../usuario/indexRegistracion.css"/>
+
 </head>
 
 <body>
@@ -48,7 +48,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-lock fa" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" placeholder="Contraseña" name="j_password" id="j_password" required>
+									<input type="password" class="form-control" placeholder="Contraseña" name="j_password" id="j_password" required>
 								</div>
 							</div>
 						</div>

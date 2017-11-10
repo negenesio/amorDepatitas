@@ -19,4 +19,13 @@ class RoleService {
         }
         return true
     }
+
+    def removeRoleUser(String role, Long userId) {
+        SecRole rol = SecRole.findByAuthority(role)
+        SecUser user = SecUser.findById(userId)
+        SecUserSecRole secUserSecRole = SecUserSecRole.findBySecUserAndSecRole(user, rol)
+        secUserSecRole.delete(flush: true)
+        springSecurityService.reauthenticate user.username
+        return true
+    }
 }

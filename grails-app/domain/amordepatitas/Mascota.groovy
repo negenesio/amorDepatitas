@@ -10,9 +10,7 @@ class Mascota {
     SecUser secUser
     Date fechaCreacion = new Date()
     String sexo
-
-//    static belongsTo = [persona: Persona]
-//    static hasMany = [imagenes: Imagenes]
+    boolean postulado = false
 
     static constraints = {
     }

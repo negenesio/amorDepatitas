@@ -1,7 +1,5 @@
 package amordepatitas
 
-import amordepatitas.seguridad.SecUser
-
 class Imagenes {
 
     Mascota mascota

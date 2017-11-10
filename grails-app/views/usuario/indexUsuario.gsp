@@ -9,10 +9,13 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="../css/bootstrapvalidator.min.css" />
-    <asset:stylesheet src="../usuario/indexRegistracion.css"/>
+    <asset:stylesheet src="indexRegistracion.css"/>
+    <asset:stylesheet src="bootstrap-timepicker.css"/>
+    <g:javascript src="bootstrap-timepicker.js"/>
     <style>
+        .title {
+            color: white;
+        }
         th, td, tr {
             text-align: center;
         }
@@ -26,6 +29,19 @@
         tr:nth-child(odd) { background: #fff}
         .table tbody tr:hover td, .table tbody tr:hover th {
             background-color: #E1F2B6;
+        }
+        .button-selected:hover {
+            background-image: initial;
+            background-repeat: initial;
+            background-position: initial;
+            -webkit-border-radius: initial;
+            -moz-border-radius: initial;
+            border-radius: initial;
+            border-style: initial;
+            border-width: initial;
+            border-color: initial;
+            background-color: initial;
+            background-color: white;!important;
         }
     </style>
     <title></title>
@@ -51,9 +67,15 @@
             <td>${mascota.fechaNacimiento}</td>
             <td>${mascota.raza.descripcion}</td>
             <td>
-                <label style="padding-left: 5px"><i class="fa fa-share" aria-hidden="true" style="font-size:20px;" data-toggle="tooltip" data-placement="top" title="Postular Mascota"></i></label>
-                <label style="padding-left: 5px"><i class="fa fa-pencil" aria-hidden="true" style="font-size:20px;" data-toggle="tooltip" data-placement="top" title="Modificar Mascota"></i></label>
-                <label style="padding-left: 5px"><i class="fa fa-times" aria-hidden="true" style="font-size:20px;" data-toggle="tooltip" data-placement="top" title="Eliminar Mascota"></i></label>
+                <g:if test="${mascota.postulado}">
+                    <label style="padding-left: 5px"><g:link controller="mascota" action="cancelarPostularMascota" params="[mascotaId: mascota.id]"><button class="button-selected" data-balloon="Cancelar Postulacion" data-balloon-pos="up"><i class="fa fa-arrow-down" aria-hidden="true" style="font-size:17px; color: red"></i></button></g:link></label>
+                </g:if>
+                <g:else>
+                    <label style="padding-left: 5px"><button class="button-selected" data-balloon="Postular Mascota" data-balloon-pos="up" data-toggle="modal" data-target=".test"><i class="fa fa-arrow-up" aria-hidden="true" style="font-size:17px; color: green;"></i></button></label>
+                    %{--<label style="padding-left: 5px"><g:link controller="mascota" action="postularMascota" params="[mascotaId: mascota.id]"><button class="button-selected" data-balloon="Postular Mascota" data-balloon-pos="up"><i class="fa fa-arrow-up" aria-hidden="true" style="font-size:17px;"></i></button></g:link></label>--}%
+                </g:else>
+                <label style="padding-left: 5px"><g:link controller="mascota" action="update" params="[mascotaId: mascota.id]"><button class="button-selected" data-balloon="Modificar Mascota" data-balloon-pos="up"><i class="fa fa-pencil" aria-hidden="true" style="font-size:17px;" ></i></button></g:link></label>
+                <label style="padding-left: 5px"><g:link controller="mascota" action="deletedMascota" params="[mascotaId: mascota.id]"><button class="button-selected" data-balloon="Eliminar Mascota" data-balloon-pos="up"><i class="fa fa-times" aria-hidden="true" style="font-size:17px;"></i></button></g:link></label>
             </td>
         </tr>
         </g:each>
@@ -68,5 +90,15 @@
         </div>
     </div>
 </g:else>
+
+<g:render template="modalPostular"/>
+<div class="input-group bootstrap-timepicker timepicker">
+    <input id="timepicker1" type="text" class="form-control input-small">
+    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+</div>
+
+<script type="text/javascript">
+    $('#timepicker1').timepicker();
+</script>
 </body>
 </html>

@@ -4,7 +4,8 @@ import grails.plugin.springsecurity.annotation.Secured
 
 class MascotaController {
 
-    def mascotaService, springSecurityService
+    MascotaService mascotaService
+    def springSecurityService
     RoleService roleService
 
     @Secured(['ROLE_ADMIN', 'ROLE_USER'])
@@ -12,8 +13,32 @@ class MascotaController {
     }
 
     @Secured(['ROLE_ADMIN', 'ROLE_USER'])
+    def update(){
+        Mascota mascota = mascotaService.getMascota(params.mascotaId)
+        ArrayList<Imagenes> imagenes = Imagenes.findAllByMascota(mascota)
+        render(view: 'update', model:[mascota:mascota, imagenes:imagenes])
+    }
+
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
+    def deletedMascota(){
+        mascotaService.deletedMascota(params.mascotaId)
+        redirect (action: 'indexUsuario', controller: 'usuario')
+    }
+
+    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def uploadMascota() {
-        return render(view:"../usuario/indexUsuario.gsp")
+        Long userId = springSecurityService.principal.id.toLong()
+        Map model = [
+                nombre_mascota : params.nombre_mascota,
+                fecha_nacimiento : params.fecha_nacimiento,
+                raza : params.raza,
+                secUser : userId,
+                sexo_mascota: params.sexo_mascota,
+                mascotaId: params.mascotaId
+        ]
+        mascotaService.updateMascota(model)
+
+        redirect (action: 'indexUsuario', controller: 'usuario')
     }
 
 
@@ -38,21 +63,17 @@ class MascotaController {
         return render(view:"create")
     }
 
-    @Secured(['ROLE_ADMIN', 'ROLE_USER'])
-    def uploadImagen() {
-        Mascota mascota = Mascota.findById(params."mascota")
-        def file = params."input-b8[]"
-        byte[] fileBytes = file.bytes
-        String contentType = file.contentType
-        Imagenes imagen = new Imagenes(mascota: mascota, imagen: fileBytes, type: contentType, nombre: file.getOriginalFilename())
-        imagen.save()
-        if(imagen.hasErrors()){
-            imagen.errors.allErrors.each {
-                log.error("[IMAGEN UPLOAD FAIL] ["+it+".]")
-            }
-            return render("false")
-        }
-        log.info("[IMAGEN UPLOAD SUCCESS] [IMAGEN: "+imagen.id+"] [MASCOTA: "+mascota.id+"]")
-        return render("true")
+    @Secured(['ROLE_ADMIN', 'ROLE_MASCOTA'])
+    def postularMascota(){
+        Long mascotaId = params.mascotaId.toLong()
+        mascotaService.postular(mascotaId)
+        redirect (action: 'indexUsuario', controller: 'usuario')
+    }
+
+    @Secured(['ROLE_ADMIN', 'ROLE_MASCOTA'])
+    def cancelarPostularMascota(){
+        Long mascotaId = params.mascotaId.toLong()
+        mascotaService.cancelarPostular(mascotaId)
+        redirect (action: 'indexUsuario', controller: 'usuario')
     }
 }

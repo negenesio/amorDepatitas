@@ -7,6 +7,10 @@ class UrlMappings {
             }
         }
 
+        name deleted_image: "/mascota/delete-image"(controller: "imagenes", parseRequest: true){
+            action = [POST:"deleteImage"]
+        }
+
         name ajaxFindUsuario: "/usuario/ajaxFindUsuario"(controller: "usuario", parseRequest: true){
             action = [POST:"ajaxFindUsuario"]
         }
@@ -42,7 +46,7 @@ class UrlMappings {
         name usuario_index: "/usuario/index"(controller: "usuario", parseRequest: true){
             action = [GET: "indexUsuario"]
         }
-        name upload_imagen: "/mascotas/uploadImagen"(controller: "mascota", parseRequest: true){
+        name upload_imagen: "/imagenes/uploadImagen"(controller: "imagenes", parseRequest: true){
             action = [POST: "uploadImagen"]
         }
 
