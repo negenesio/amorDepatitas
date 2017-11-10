@@ -10,9 +10,35 @@
 <head>
     <meta name="layout" content="main"/>
     <asset:stylesheet src="indexRegistracion.css"/>
-    <asset:stylesheet src="bootstrap-timepicker.css"/>
-    <g:javascript src="bootstrap-timepicker.js"/>
+
     <style>
+
+        .btn span.glyphicon {
+            opacity: 0;
+        }
+        .btn.active span.glyphicon {
+            opacity: 1;
+        }
+        .weekDays-selector input {
+            display: none!important;
+        }
+
+        .weekDays-selector input[type=checkbox] + label {
+            display: inline-block;
+            border-radius: 6px;
+            background: #dddddd;
+            height: 40px;
+            width: 30px;
+            margin-right: 3px;
+            line-height: 40px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .weekDays-selector input[type=checkbox]:checked + label {
+            background: #2AD705;
+            color: #ffffff;
+        }
         .title {
             color: white;
         }
@@ -25,8 +51,8 @@
             background: rgba(66, 70, 69, 0.69);
             color: white;
         }
-        tr:nth-child(even) { background: #ddd }
-        tr:nth-child(odd) { background: #fff}
+        .mascota tr:nth-child(even) { background: #ddd }
+        .mascota tr:nth-child(odd) { background: #fff}
         .table tbody tr:hover td, .table tbody tr:hover th {
             background-color: #E1F2B6;
         }
@@ -49,9 +75,9 @@
 
 <body>
 <g:if test="${mascotas}">
-    <table class="table table-striped">
+    <table class="table table-striped mascota">
         <thead>
-        <tr>
+        <tr class="mascota">
             <th>Nombre</th>
             <th>Sexo</th>
             <th>Fecha Nacimiento</th>
@@ -61,7 +87,7 @@
         </thead>
         <tbody>
         <g:each in="${mascotas}" var="mascota">
-        <tr>
+        <tr class="mascota">>
             <td>${mascota.nombre}</td>
             <td>${mascota.sexo}</td>
             <td>${mascota.fechaNacimiento}</td>
@@ -92,13 +118,6 @@
 </g:else>
 
 <g:render template="modalPostular"/>
-<div class="input-group bootstrap-timepicker timepicker">
-    <input id="timepicker1" type="text" class="form-control input-small">
-    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-</div>
 
-<script type="text/javascript">
-    $('#timepicker1').timepicker();
-</script>
 </body>
 </html>

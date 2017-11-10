@@ -1,19 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-@import 'font-awesome';
-
 <html>
 <head>
 	<meta name="layout" content="main"/>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="css/bootstrapvalidator.min.css" />
-    <asset:stylesheet src="/usuario/indexRegistracion.css"/>
+    <asset:stylesheet src="indexRegistracion.css"/>
 </head>
 
 <body>
 <div class="container">
     <div class="row main">
         <div class="main-login main-center">
-            <center><h3 class="title">Encuentra la pareja perfecta para tu Mascota!</h3></center>
+            <center><h3 class="header-title">Encuentra la pareja perfecta para tu Mascota!</h3></center>
             <g:form name="form_registro" mapping="usuario_create" method="POST" >
                 <div class="form-group">
                     <label for="username" class="cols-sm-2 custom-padding">Usuario</label>
