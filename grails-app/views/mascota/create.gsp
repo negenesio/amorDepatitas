@@ -1,5 +1,4 @@
 <%@ page import="amordepatitas.Raza" contentType="text/html;charset=UTF-8" %>
-@import 'font-awesome';
 
 <html>
 <head>

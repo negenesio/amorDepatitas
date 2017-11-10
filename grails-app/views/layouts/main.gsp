@@ -4,7 +4,6 @@
 	<title><g:layoutTitle default="Grails"/></title>
 
 	<asset:stylesheet src="application.css"/>
-	%{--<asset:stylesheet src="usuario/indexRegistracion.css"/>--}%
 	<asset:stylesheet src="sidebar.css"/>
 	<asset:stylesheet src="bootstrap.min.css"/>
 	<asset:stylesheet src="bootstrapvalidator.min.css"/>
@@ -24,7 +23,6 @@
 	<g:javascript src="fileinput.min.js"/>
 	<g:javascript src="locales/es.js"/>
 	<g:javascript src="bootsnav.js"/>
-	%{--<g:javascript src="../../bower_components/bootstrap-timepicker/js/bootstrap-timepicker.js"/>--}%
 
 	<style>
 		.btn-default.btn-on.active{background-color: #0f23b7;color: white;}
