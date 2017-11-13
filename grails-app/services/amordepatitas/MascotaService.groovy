@@ -20,9 +20,8 @@ class MascotaService {
                 fechaNacimiento: fechaNacimiento, secUser: usuario, sexo: mascotaParams.sexo_mascota)
         mascota.save()
         if(mascota.hasErrors()){
-            println "---->> ERROR --->>>"
             mascota.errors.allErrors.each {
-                println it
+                LOG.error("[FAIL-ERROR] [CREATE MASCOTA] - [MESSAGE: ${it}] - [Usuario: ${usuario.username}]")
             }
             return false
         }
@@ -35,11 +34,11 @@ class MascotaService {
         String username = usuario.username
         Mascota mascota = Mascota.findById(mascotaId)
         Imagenes.findAllByMascota(mascota).each { it.delete() }
+        Postulacion.findByMascotaAndUser(mascota, usuario).each { it.delete() }
         mascota.delete(flush: true)
         if(mascota.hasErrors()) {
-            println "---->> ERROR --->>>"
             mascota.errors.allErrors.each {
-                println it
+                LOG.error("[FAIL-ERROR] [BORRAR MASCOTA] - [MESSAGE: ${it}] - [Usuario: ${usuario.username}]")
             }
             return false
         }
@@ -80,37 +79,15 @@ class MascotaService {
 
         mascota.save()
         if(mascota.hasErrors()){
-            println "---->> ERROR --->>>"
             mascota.errors.allErrors.each {
-                println it
+                LOG.error("[FAIL-ERROR] [UPDATE MASCOTA] - [MESSAGE: ${it}] - [Usuario: ${usuario.username}]")
             }
             return false
         }
-        LOG.info("[SUCCESS] [CREATE MASCOTA] - [RAZA: ${mascota.raza.descripcion}] - [Usuario: ${usuario.username}]")
+        LOG.info("[SUCCESS] [UPDATE MASCOTA] - [RAZA: ${mascota.raza.descripcion}] - [Usuario: ${usuario.username}]")
         return mascota.id
     }
 
-    def postular(Long mascotaId){
-        SecUser usuario = getUser()
-        Mascota mascota = Mascota.findById(mascotaId)
-        Postulacion postulacion = new Postulacion(mascota: mascota, user:usuario)
-        postulacion.save()
-        mascota.postulacion = true
-        mascota.save()
-
-        return true
-    }
-
-    def cancelarPostular(Long mascotaId){
-        SecUser usuario = getUser()
-        Mascota mascota = Mascota.findById(mascotaId)
-        Postulacion postulacion = Postulacion.findByMascotaAndUser(mascota, usuario)
-        postulacion.delete()
-        mascota.postulacion = false
-        mascota.save()
-
-        return true
-    }
 
     private SecUser getUser(){
         String usuario = springSecurityService.principal.username

@@ -23,6 +23,7 @@
 	<g:javascript src="fileinput.min.js"/>
 	<g:javascript src="locales/es.js"/>
 	<g:javascript src="bootsnav.js"/>
+	<g:javascript src="moment.js"/>
 
 	<style>
 		.btn-default.btn-on.active{background-color: #0f23b7;color: white;}
@@ -137,9 +138,11 @@
 										<div class="col-menu col-md-3">
 												<ul class="menu-col">
 													<li><g:link controller="mascota" action="createIndex">Crear</g:link></li>
+													<sec:ifAnyGranted roles='ROLE_POSTULACION'>
+														<li><g:link controller="postulacion" action="busquedaIndex">Buscar</g:link></li>
+													</sec:ifAnyGranted>
 													<sec:ifAnyGranted roles='ROLE_MASCOTA'>
-													<li><a href="#">Buscar</a></li>
-													<li><g:link controller="mascota" action="postularMascotaIndex">Postular</g:link></li>
+														<li><g:link controller="mascota" action="postularMascotaIndex">Postular</g:link></li>
 													</sec:ifAnyGranted>
 													%{--</g:if>--}%
 												</ul>

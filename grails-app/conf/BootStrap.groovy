@@ -15,6 +15,7 @@ class BootStrap {
         def userRole = SecRole.findByAuthority('ROLE_USER') ?: new SecRole(authority: 'ROLE_USER').save(failOnError: true)
         def adminRole = SecRole.findByAuthority('ROLE_ADMIN') ?: new SecRole(authority: 'ROLE_ADMIN').save(failOnError: true)
         def mascotaRole = SecRole.findByAuthority('ROLE_MASCOTA') ?: new SecRole(authority: 'ROLE_MASCOTA').save(failOnError: true)
+        def rolePostulacion = SecRole.findByAuthority('ROLE_POSTULACION') ?: new SecRole(authority: 'ROLE_POSTULACION').save(failOnError: true)
 
         def adminUser = SecUser.findByUsername('admin') ?: new SecUser(
                 username: 'admin',

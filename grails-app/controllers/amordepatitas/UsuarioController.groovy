@@ -63,10 +63,16 @@ class UsuarioController {
 
     @Secured(['IS_AUTHENTICATED_REMEMBERED'])
     def indexUsuario(){
+
         SecUser user = SecUser.findById(springSecurityService.principal.id.toLong())
         List<Mascota> mascotaList = Mascota.findAllBySecUser(user)
         if(mascotaList) {
-            return [mascotas: mascotaList]
+            if(mascotaList.find {it.postulado == true}){
+               List<Postulacion> postulacionList = Postulacion.findAllByUser(user)
+                return [mascotas: mascotaList, postulaciones: postulacionList]
+            } else {
+                return [mascotas: mascotaList]
+            }
         }
     }
 }

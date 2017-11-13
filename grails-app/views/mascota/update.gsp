@@ -6,6 +6,10 @@
     <meta name="layout" content="main"/>
     <asset:stylesheet src="indexRegistracion.css"/>
     <style>
+    div.kv-file-content > img{
+        width: 50px;
+        height: 50px;
+    }
     .upload-file{
         padding-top: -20px;
         background: rgba(66, 70, 69, 0.69);
@@ -90,7 +94,7 @@
                 <tr>
                 <g:each in="${imagenes}" var="imagen">
                     <th style="text-align: center" id="th-${imagen.id}">
-                        <img src="${createLink(controller: 'imagenes', action: 'viewImage', params: ['id': imagen.id])}"/>
+                        <img src="${createLink(controller: 'imagenes', action: 'viewImage', params: ['id': imagen.id])}" width="150px" height="150px"/>
                         <center><span style="width: 80px;" class="input-group-addon" onclick="deleted(${imagen.id})">
                             <i class="fa fa-trash-o" aria-hidden="true" style="width: 30px"></i>
                         </span></center>
@@ -185,6 +189,7 @@
             language: "es",
             uploadExtraData:{mascota: getMascotaId()},
             maxFileCount: 3,
+            maxFileSize: 1024*500,
             allowedFileExtensions: ["jpg", "png", "gif"],
             fileActionSettings : {
                 showUpload : false,

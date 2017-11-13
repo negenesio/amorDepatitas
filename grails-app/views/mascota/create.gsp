@@ -5,6 +5,10 @@
     <meta name="layout" content="main"/>
     <asset:stylesheet src="indexRegistracion.css"/>
     <style>
+    div.kv-file-content > img{
+        width: 50px;
+        height: 50px;
+    }
     .upload-file{
         padding-top: -20px;
         background: rgba(66, 70, 69, 0.69);

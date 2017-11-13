@@ -63,17 +63,4 @@ class MascotaController {
         return render(view:"create")
     }
 
-    @Secured(['ROLE_ADMIN', 'ROLE_MASCOTA'])
-    def postularMascota(){
-        Long mascotaId = params.mascotaId.toLong()
-        mascotaService.postular(mascotaId)
-        redirect (action: 'indexUsuario', controller: 'usuario')
-    }
-
-    @Secured(['ROLE_ADMIN', 'ROLE_MASCOTA'])
-    def cancelarPostularMascota(){
-        Long mascotaId = params.mascotaId.toLong()
-        mascotaService.cancelarPostular(mascotaId)
-        redirect (action: 'indexUsuario', controller: 'usuario')
-    }
 }

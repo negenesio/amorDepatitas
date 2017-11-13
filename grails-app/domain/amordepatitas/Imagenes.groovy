@@ -9,6 +9,6 @@ class Imagenes {
     Date fechaCreacion = new Date()
 
     static constraints = {
-        imagen (contentType: ['png','jpg', 'gif'], sqlType: 'longblob', maxSize: 1024*50)
+        imagen (contentType: ['png','jpg', 'gif'], sqlType: 'longblob', maxSize: 1024*500)
     }
 }
