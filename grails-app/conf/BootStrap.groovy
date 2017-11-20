@@ -1,7 +1,9 @@
+import amordepatitas.Postulacion
 import amordepatitas.Raza
 import amordepatitas.seguridad.SecRole
 import amordepatitas.seguridad.SecUser
 import amordepatitas.seguridad.SecUserSecRole
+import amordepatitas.Mascota
 
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -109,6 +111,32 @@ class BootStrap {
         razas.each {
             new Raza(descripcion: it).save(failOnError: true)
         }
+
+        new Mascota(nombre: 'KERO', raza: Raza.findByDescripcion('Schnauzer miniatura'), fechaNacimiento: Date.parse('YYY-mm-dd', '2015-11-04'), secUser: SecUser.findByUsername('ADMIN'),
+                fechaCreacion: new Date(), sexo: 'MASCULINO').save(failOnError: true)
+
+        new Mascota(nombre: 'RUPERTO', raza: Raza.findByDescripcion('Schnauzer estándar'), fechaNacimiento:
+                Date.parse('YYY-mm-dd', '2010-08-22'), secUser: SecUser.findByUsername('ADMIN'),
+                fechaCreacion: new Date(), sexo: 'MASCULINO').save(failOnError: true)
+
+        new Postulacion(user: SecUser.findByUsername('ADMIN'), mascota: Mascota.findById(1),
+                desde: Date.parse('HH:mm', '10:00'), hasta:  Date.parse('HH:mm', '18:00'),
+                dias: 'LUNES,MARTES,MIERCOLES,JUEVES,VIERNES',
+                observaciones: 'Ruperto es un macho aplpha de excelente cualidades').save(failOnError: true)
+
+        new Postulacion(user: SecUser.findByUsername('ADMIN'), mascota: Mascota.findById(2),
+                desde: Date.parse('HH:mm', '15:00'), hasta:  Date.parse('HH:mm', '22:00'),
+                dias: 'SABADO,DOMINGO', observaciones: 'Kero es muy jugueton y alegre').save(failOnError: true)
+        Mascota mascota = Mascota.findById(1)
+        mascota.postulado = true
+        mascota.save(failOnError: true)
+
+        mascota = Mascota.findById(2)
+        mascota.postulado = true
+        mascota.save(failOnError: true)
+
+        SecUserSecRole.create(adminUser, mascotaRole)
+        SecUserSecRole.create(adminUser, rolePostulacion)
     }
     def destroy = {
     }

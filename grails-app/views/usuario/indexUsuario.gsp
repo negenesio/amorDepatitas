@@ -87,7 +87,7 @@
         <tr class="mascota">
             <td>${mascota.nombre}</td>
             <td>${mascota.sexo}</td>
-            <td>${mascota.fechaNacimiento}</td>
+            <td>${mascota.fechaNacimiento.format('dd/mm/YYYY')}</td>
             <td>${mascota.raza.descripcion}</td>
             <td>
                 <g:set var="postulacion_mascota" value="${postulaciones?.find{it?.mascota?.id == mascota.id}}"/>

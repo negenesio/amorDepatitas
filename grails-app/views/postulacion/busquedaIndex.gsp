@@ -8,7 +8,7 @@
 <head>
     <meta name="layout" content="main"/>
     <asset:stylesheet src="indexRegistracion.css"/>
-
+    <g:javascript src="bootstrap-checkbox.js"/>
     <style>
         .btn span.glyphicon {
             opacity: 0;
@@ -66,7 +66,7 @@
             background-color: initial;
             background-color: white;!important;
         }
-    </style>
+</style>
 </head>
 <body>
     <div class="container" id="registrar_mascota" style="height: 120px">
@@ -87,8 +87,8 @@
                         <div class="input-group">
                             <span class="input-group-addon"><img src="../images/icons/icon-dog.png"/></span>
                             <select id="raza" name="raza" class="form-control selectpicker" title="Seleccione la Raza" data-live-search="true" style="background-color: #ccc;overflow-x: hidden; overflow-y: scroll;" required>
-                                <g:each in="${amordepatitas.Raza.list()}">
-                                    <option value="${it?.id}">${it?.descripcion}</option>
+                                <g:each in="${razas}" var="raza">
+                                    <option value="${raza?.id}">${raza?.descripcion}</option>
                                 </g:each>
                             </select>
                         </div>
@@ -111,150 +111,198 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-2 col-form-label">Dias Disponibles</label>
-                    <div class="cols-sm-10">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-                            <center><label class="btn btn-default radio-dia" id="l_lunes_update">
-                                L
-                                <input tag-dia-update="l_lunes_update" id="dias_check" name="LUNES" type="checkbox" class="check_input lunes">
-                                <span class="glyphicon glyphicon-ok"></span>
-                            </label>
-                            <label class="btn btn-default radio-dia" id="l_martes_update">
-                                M
-                                <input tag-dia-update="l_martes_update" id="dias_check" name="MARTES" type="checkbox" class="check_input martes">
-                                <span class="glyphicon glyphicon-ok"></span>
-                            </label>
-                            <label class="btn btn-default radio-dia" id="l_miercoles_update">
-                                M
-                                <input tag-dia-update="l_miercoles_update" id="dias_check" name="MIERCOLES" type="checkbox" class="check_input miercoles">
-                                <span class="glyphicon glyphicon-ok"></span>
-                            </label>
-                            <label class="btn btn-default radio-dia" id="l_jueves_update">
-                                J
-                                <input tag-dia-update="l_jueves_update" id="dias_check" name="JUEVES" type="checkbox" class="check_input jueves">
-                                <span class="glyphicon glyphicon-ok"></span>
-                            </label>
-                            <label class="btn btn-default radio-dia" id="l_viernes_update">
-                                V
-                                <input tag-dia-update="l_viernes_update" id="dias_check" name="VIERNES" type="checkbox" class="check_input viernes">
-                                <span class="glyphicon glyphicon-ok"></span>
-                            </label>
-                            <label class="btn btn-default radio-dia" id="l_sabado_update">
-                                S
-                                <input tag-dia-update="l_sabado_update" id="dias_check" name="SABADO" type="checkbox"  class="check_input sabado">
-                                <span class="glyphicon glyphicon-ok"></span>
-                            </label>
-                            <label class="btn btn-default radio-dia" id="l_domingo_update">
-                                D
-                                <input tag-dia-update="l_domingo_update" id="dias_check" name="DOMINGO" type="checkbox" class="check_input domingo">
-                                <span class="glyphicon glyphicon-ok"></span>
-                            </label></center>
-                        </div>
-                    </div>
+                   <label class="col-2 col-form-label">Dias Disponibles</label>
+                   <div class="cols-sm-10">
+                       <div class="input-group">
+                           <div class="checkbox checkbox-primary">
+                               <input id="lunes" type="checkbox" name="LUNES" class="check_dias">
+                               <label for="lunes">
+                                   Lunes
+                               </label>
+                           </div>
+                           <div class="checkbox checkbox-primary">
+                               <input id="martes" type="checkbox" name="MARTES" class="check_dias">
+                               <label for="martes">
+                                   Martes
+                               </label>
+                           </div>
+                           <div class="checkbox checkbox-primary">
+                               <input id="miercoles" type="checkbox" name="MIERCOLES" class="check_dias">
+                               <label for="miercoles">
+                                   Miercoles
+                               </label>
+                           </div>
+                           <div class="checkbox checkbox-primary">
+                               <input id="jueves" type="checkbox" name="JUEVES" class="check_dias">
+                               <label for="jueves">
+                                   Jueves
+                               </label>
+                           </div>
+                           <div class="checkbox checkbox-primary">
+                               <input id="viernes" type="checkbox" name="VIERNES" class="check_dias">
+                               <label for="viernes">
+                                   Viernes
+                               </label>
+                           </div>
+                           <div class="checkbox checkbox-primary">
+                               <input id="sabado" type="checkbox" name="SABADO" class="check_dias">
+                               <label for="sabado">
+                                   Sabado
+                               </label>
+                           </div>
+                           <div class="checkbox checkbox-primary">
+                               <input id="domingo" type="checkbox" name="DOMINGO" class="check_dias">
+                               <label for="domingo">
+                                   Domingo
+                               </label>
+                           </div>
+                       </div>
+                   </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="col-2 col-form-label">Horarios Disponibles</label>
-                    <div class="cols-sm-10">
-                        <div class="input-group" onchange="horario()">
-                            <span class="input-group-addon"><i class="fa fa-clock-o" aria-hidden="true"></i></span>
-                            <div class="btn-group" id="horario" data-toggle="buttons">
-                                <label class="btn btn-default btn-on btn-sm active">
-                                    <input type="radio" value="SI" name="disponible_hora" checked="checked" class="horario_radio_si">SI</label>
-                                <label class="btn btn-default btn-off btn-sm ">
-                                    <input type="radio" value="NO" name="disponible_hora" class="horario_radio_no">INDIFERENTE</label>
-                            </div>
+               <div class="form-group">
+                   <label class="col-2 col-form-label">Horarios Disponibles</label>
+                   <div class="cols-sm-10">
+                       <div class="input-group">
+                           <span class="input-group-addon"><i class="fa fa-clock-o" aria-hidden="true"></i></span>
+                           <input id="check_horario" name="check_horario" type="checkbox" data-reverse>
+                       <br>
+                           <div class="input-group">
+                      <table id="tabla_horario" class="table table-hover-default" style="padding-top: 10px;">
+                           <tbody>
+                           <tr>
+                               <td style="background-color: #fff; color: black;">Disponibilidad Desde</td>
+                               <td style="background-color: #fff; color: black;">Disponibilidad Hasta</td>
+                           </tr>
+                           <tr>
+                               <td><input style="color: black" name="desde" id="desde" type="time" onchange="validHorario(this)"></td>
+                               <td><input style="color: black" name="hasta" id="hasta" type="time" onchange="validHorario(this)"></td>
+                           </tr>
+                           </tbody>
+                       </table>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
 
-                        <br>
-                        <center><div class="input-group">
-                       <table id="tabla_horario" class="table table-hover-default" style="padding-top: 10px;">
-                            <tbody>
-                            <tr>
-                                <td style="background-color: #fff; color: black;">Disponibilidad Desde</td>
-                                <td style="background-color: #fff; color: black;">Disponibilidad Hasta</td>
-                            </tr>
-                            <tr>
-                                <td><input style="color: black" input name="desde" id="desde" type="time" required onchange="validHorario(this)"></td>
-                                <td><input style="color: black" name="hasta" id="hasta" type="time" required onchange="validHorario(this)"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        </div></center>
-                      </div>
-                    </div>
-                  </div>
-
-                <div class="form-group">
-                    <label class="col-2 col-form-label">Rango de Edad</label>
-                    <div class="cols-sm-10">
-                        <div class="input-group" onchange="edad()">
-                            <span class="input-group-addon"><i class="fa fa-birthday-cake fa" aria-hidden="true"></i></span>
-                            <div class="btn-group" id="edad" data-toggle="buttons">
-                                <label class="btn btn-default btn-on btn-sm active">
-                                    <input type="radio" value="SI" name="disponible_edad" checked="checked" class="edad_radio_si">SI</label>
-                                <label class="btn btn-default btn-off btn-sm ">
-                                    <input type="radio" value="NO" name="disponible_edad" class="edad_radio_no">INDIFERENTE</label>
-                            </div>
-                        <br>
-                        <center><div class="input-group">
-                            <table id="tabla_edad" class="table table-hover-default" style="padding-top: 10px;">
-                                <tbody>
-                                <tr>
-                                    <td style="background-color: #fff; color: black;">Edad Desde</td>
-                                    <td style="background-color: #fff; color: black;">Edad Hasta</td>
-                                </tr>
-                                <tr>
-                                    <td><input style="color: black" input name="desde_edad" id="desde_edad" type="number" required onchange="validEdad(this)"></td>
-                                    <td><input style="color: black" name="hasta_edad" id="hasta_edad" type="number" required onchange="validEdad(this)"></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div></center>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group ">
-                    <input type="submit" class="btn btn-info btn-block login" id="submit_busqueda" value="Realizar Busqueda"/>
-                </div>
-                </div>
+               <div class="form-group">
+                   <label class="col-2 col-form-label">Rango de Edad</label>
+                   <div class="cols-sm-10">
+                       <div class="input-group">
+                           <span class="input-group-addon"><i class="fa fa-birthday-cake fa" aria-hidden="true"></i></span>
+                           <input id="check_edad" name="check_edad" type="checkbox" data-reverse>
+                           <script>
+                               $('#check_edad').checkboxpicker({
+                                   offLabel: 'INDIFERENTE',
+                                   onLabel: 'SI'
+                               });
+                           </script>
+                       <br>
+                       <div class="input-group">
+                           <table id="tabla_edad" class="table table-hover-default" style="padding-top: 10px;">
+                               <tbody>
+                               <tr>
+                                   <td style="background-color: #fff; color: black;">Edad Desde</td>
+                                   <td style="background-color: #fff; color: black;">Edad Hasta</td>
+                               </tr>
+                               <tr>
+                                   <td><input style="color: black" name="desde_edad" id="desde_edad" type="number" min="1" max="19" onchange="validEdad(this)"></td>
+                                   <td><input style="color: black" name="hasta_edad" id="hasta_edad" type="number" min="2" max="20" onchange="validEdad(this)"></td>
+                               </tr>
+                               </tbody>
+                           </table>
+                       </div>
+                       </div>
+                   </div>
+               </div>
+               <div class="form-group ">
+                   <input type="submit" class="btn btn-info btn-block login" id="submit_busqueda" value="Realizar Busqueda"/>
+               </div>
+               </div>
             </g:form>
         </div>
     </div>
 </div>
 <script>
-    $("#submit_busqueda").click(function(){
-        var lunes = document.querySelector("input[tag-dia-update='l_lunes_update']");
-        var martes = document.querySelector("input[tag-dia-update='l_martes_update']");
-        var miercoles = document.querySelector("input[tag-dia-update='l_miercoles_update']");
-        var jueves = document.querySelector("input[tag-dia-update='l_jueves_update']");
-        var viernes = document.querySelector("input[tag-dia-update='l_viernes_update']");
-        var sabado = document.querySelector("input[tag-dia-update='l_sabado_update']");
-        var domingo = document.querySelector("input[tag-dia-update='l_domingo_update']");
-        if($(".radio-dia.active").length == 0){
+    $("#lunes").change(function(){
+        if($(this).prop('checked')){
+            $(this).addClass('active');
+        } else {
+            $(this).removeClass('active');
+        }
+    });
 
+    $("#martes").change(function(){
+        if($(this).prop('checked')){
+            $(this).addClass('active');
+        } else {
+            $(this).removeClass('active');
+        }
+    });
+
+    $("#miercoles").change(function(){
+        if($(this).prop('checked')){
+            $(this).addClass('active');
+        } else {
+            $(this).removeClass('active');
+        }
+    });
+
+    $("#jueves").change(function(){
+        if($(this).prop('checked')){
+            $(this).addClass('active');
+        } else {
+            $(this).removeClass('active');
+        }
+    });
+
+    $("#viernes").change(function(){
+        if($(this).prop('checked')){
+            $(this).addClass('active');
+        } else {
+            $(this).removeClass('active');
+        }
+    });
+
+    $("#sabado").change(function(){
+        if($(this).prop('checked')){
+            $(this).addClass('active');
+        } else {
+            $(this).removeClass('active');
+        }
+    });
+
+    $("#domingo").change(function(){
+        if($(this).prop('checked')){
+            $(this).addClass('active');
+        } else {
+            $(this).removeClass('active');
+        }
+    });
+
+    $("#submit_busqueda").click(function(){
+        var lunes = document.getElementById('lunes');
+        var martes = document.getElementById('martes');
+        var miercoles = document.getElementById('miercoles');
+        var jueves = document.getElementById('jueves');
+        var viernes = document.getElementById('viernes');
+        var sabado = document.getElementById('sabado');
+        var domingo = document.getElementById('domingo');
+        if($(".check_dias.active").length == 0){
             lunes.setCustomValidity('Seleccione al menos 1 dia.');
             lunes.reportValidity();
-
             martes.setCustomValidity('Seleccione al menos 1 dia.');
             martes.reportValidity();
-
             miercoles.setCustomValidity('Seleccione al menos 1 dia.');
             miercoles.reportValidity();
-
             jueves.setCustomValidity('Seleccione al menos 1 dia.');
             jueves.reportValidity();
-
             viernes.setCustomValidity('Seleccione al menos 1 dia.');
             viernes.reportValidity();
-
             sabado.setCustomValidity('Seleccione al menos 1 dia.');
             sabado.reportValidity();
-
             domingo.setCustomValidity('Seleccione al menos 1 dia.');
             domingo.reportValidity();
-
-
         } else {
             lunes.setCustomValidity('');
             martes.setCustomValidity('');
@@ -264,104 +312,7 @@
             sabado.setCustomValidity('');
             domingo.setCustomValidity('');
         }
-
     });
-
-    $("#l_lunes_update").change(function(){
-        if($("[tag-dia-update='l_lunes_update']").is(":checked")){
-            $("#l_lunes_update").addClass('btn-success');
-            $("#l_lunes_update").addClass('active');
-            $("#l_lunes_update").removeClass('btn-default');
-        } else {
-            $("#l_lunes_update").addClass('btn-default');
-            $("#l_lunes_update").removeClass('active');
-            $("#l_lunes_update").removeClass('btn-success');
-        }
-    });
-
-    $("#l_martes_update").change(function(){
-        if($("[tag-dia-update='l_martes_update']").is(":checked")){
-            $("#l_martes_update").addClass('btn-success');
-            $("#l_martes_update").addClass('active');
-            $("#l_martes_update").removeClass('btn-default');
-        } else {
-            $("#l_martes_update").addClass('btn-default');
-            $("#l_martes_update").removeClass('active');
-            $("#l_martes_update").removeClass('btn-success');
-        }
-    });
-
-    $("#l_miercoles_update").change(function(){
-        if($("[tag-dia-update='l_miercoles_update']").is(":checked")){
-            $("#l_miercoles_update").addClass('btn-success');
-            $("#l_miercoles_update").addClass('active');
-            $("#l_miercoles_update").removeClass('btn-default');
-        } else {
-            $("#l_miercoles_update").addClass('btn-default');
-            $("#l_miercoles_update").removeClass('active');
-            $("#l_miercoles_update").removeClass('btn-success');
-        }
-    });
-
-    $("#l_jueves_update").change(function(){
-        if($("[tag-dia-update='l_jueves_update']").is(":checked")){
-            $("#l_jueves_update").addClass('btn-success');
-            $("#l_jueves_update").addClass('active');
-            $("#l_jueves_update").removeClass('btn-default');
-        } else {
-            $("#l_jueves_update").addClass('btn-default');
-            $("#l_jueves_update").removeClass('active');
-            $("#l_jueves_update").removeClass('btn-success');
-        }
-    });
-
-    $("#l_viernes_update").change(function(){
-        if($("[tag-dia-update='l_viernes_update']").is(":checked")){
-            $("#l_viernes_update").addClass('btn-success');
-            $("#l_viernes_update").addClass('active');
-            $("#l_viernes_update").removeClass('btn-default');
-        } else {
-            $("#l_viernes_update").addClass('btn-default');
-            $("#l_viernes_update").removeClass('active');
-            $("#l_viernes_update").removeClass('btn-success');
-        }
-    });
-
-    $("#l_sabado_update").change(function(){
-        if($("[tag-dia-update='l_sabado_update']").is(":checked")){
-            $("#l_sabado_update").addClass('btn-success');
-            $("#l_sabado_update").addClass('active');
-            $("#l_sabado_update").removeClass('btn-default');
-        } else {
-            $("#l_sabado_update").addClass('btn-default');
-            $("#l_sabado_update").removeClass('active');
-            $("#l_sabado_update").removeClass('btn-success');
-        }
-    });
-
-    $("#l_domingo_update").change(function(){
-        if($("[tag-dia-update='l_domingo_update']").is(":checked")){
-            $("#l_domingo_update").addClass('btn-success');
-            $("#l_domingo_update").addClass('active');
-            $("#l_domingo_update").removeClass('btn-default');
-        } else {
-            $("#l_domingo_update").addClass('btn-default');
-            $("#l_domingo_update").removeClass('active');
-            $("#l_domingo_update").removeClass('btn-success');
-        }
-    });
-
-    function horario(){
-        if($(".horario_radio_no").is(":checked")){
-            $("#tabla_horario").hide();
-            $("#desde").attr("required", false)
-            $("#hasta").attr("required", false)
-        } else {
-            $("#tabla_horario").show();
-            $("#desde").attr("required", true)
-            $("#hasta").attr("required", true)
-        }
-    }
 
     function validHorario(input){
         var hasta = parseFloat($("#hasta").val().replace(':','.'));
@@ -378,33 +329,65 @@
         }
     }
 
-
-    function edad(){
-        if($(".edad_radio_no").is(":checked")){
-            $("#tabla_edad").hide();
-            $("#desde_edad").attr("required", false)
-            $("#hasta_edad").attr("required", false)
-        } else {
-            $("#tabla_edad").show();
-            $("#desde_edad").attr("required", true)
-            $("#hasta_edad").attr("required", true)
-        }
-    }
-
     function validEdad(input){
-        var hasta = $("#hasta_edad").val();
-        var desde = $("#desde_edad").val();
-        var hasta_input = document.getElementById("hasta_edad");
-        var desde_input = document.getElementById("desde_edad");
+        var desde = $('#desde_edad').val();
+        var hasta = $('#hasta_edad').val();
 
-        if(desde >= hasta) {
-            input.setCustomValidity('El horario Desde no debe ser menor al Hasta ');
-            input.reportValidity()
+        if(parseInt(desde) < parseInt(hasta)){
+            document.getElementById('desde_edad').setCustomValidity('');
+            document.getElementById('hasta_edad').setCustomValidity('');
+            $("#desde").attr("required", false)
+            $("#hasta").attr("required", false)
         } else {
-            hasta_input.setCustomValidity('');
-            desde_input.setCustomValidity('');
+            document.getElementById('desde_edad').setCustomValidity('La edad desde no puede ser mayor al Hasta.');
+            document.getElementById('hasta_edad').setCustomValidity('La edad desde no puede ser mayor al Hasta.');
+            $("#desde").attr("required", true)
+            $("#hasta").attr("required", true)
         }
     }
+
+    $( document ).ready(function() {
+        $('#tabla_horario').hide();
+        $('#tabla_edad').hide();
+        $('#check_horario').checkboxpicker({
+            offLabel: 'INDIFERENTE',
+            onLabel: 'SI'
+        });
+        $('#check_horario').on('change', function() {
+            if($('#check_horario').prop('checked') == true) {
+                $('#tabla_horario').show();
+                $(desde).attr("required", true)
+                $(hasta).attr("required", true)
+                $("#check_horario").val('SI');
+            }
+            if($('#check_horario').prop('checked') == false) {
+                $('#tabla_horario').hide();
+                $(desde).attr("required", false)
+                $(hasta).attr("required", false)
+                $("#check_horario").val('NO');
+            }
+        });
+
+        $('#tabla_edad').hide();
+        $('#check_edad').checkboxpicker({
+            offLabel: 'INDIFERENTE',
+            onLabel: 'SI'
+        });
+        $('#check_edad').on('change', function() {
+            if($('#check_edad').prop('checked') == true) {
+                $('#tabla_edad').show();
+                $("#check_edad").val('SI');
+                $("#desde_edad").attr("required", true);
+                $("#hasta_edad").attr("required", true);
+            }
+            if($('#check_edad').prop('checked') == false) {
+                $('#tabla_edad').hide();
+                $("#check_edad").val('NO');
+                $("#desde_edad").attr("required", false);
+                $("#hasta_edad").attr("required", false);
+            }
+        });
+    });
 </script>
 </body>
 </html>

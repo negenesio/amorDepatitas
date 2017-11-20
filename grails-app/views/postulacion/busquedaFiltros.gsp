@@ -75,10 +75,12 @@
     <table class="table table-striped mascota">
         <thead>
         <tr class="mascota">
-            <th>Nombre</th>
-            <th>Sexo</th>
-            <th>Fecha Nacimiento</th>
+            <th>Nombre Mascota</th>
+            <th>Dias Disponible</th>
             <th>Raza</th>
+            <th>Hora Disponible Desde</th>
+            <th>Hora Disponible Hasta</th>
+            <th>Edad</th>
             <th>Acciones</th>
         </tr>
         </thead>
@@ -87,13 +89,14 @@
             <tr class="mascota">
                 <td>${postulacion.mascota.nombre}</td>
                 <td>${postulacion.dias}</td>
-                <td>${postulacion.desde}</td>
-                <td>${postulacion.hasta}</td>
                 <td>${postulacion.mascota.raza.descripcion}</td>
+                <td>${postulacion.desde.format('HH:mm')}</td>
+                <td>${postulacion.hasta.format('HH:mm')}</td>
+                <td>${new Date().format('YYYY').toInteger() - postulacion.mascota.fechaNacimiento.format('YYYY').toInteger()}</td>
                 <td>
                 <label style="padding-left: 5px">
-                    <button class="button-selected" data-balloon="Eliminar Mascota" data-balloon-pos="up">
-                        <i class="fa fa-times" aria-hidden="true" style="font-size:17px;"></i>
+                    <button class="button-selected" data-balloon="Ver Detalle" data-balloon-pos="up">
+                        <i class="fa fa-eye" aria-hidden="true" style="font-size:17px;"></i>
                     </button>
                 </label>
                 </td>
@@ -107,6 +110,7 @@
         <div class="row main registrar-mascota">
             <center>
                 <h3 class="title">Sin resultados para tu seleccion!</h3>
+                <g:link mapping="buscar_postulacion"><button class="btn-info">Realizar Nueva Busqueda</button></g:link>
             </center>
         </div>
     </div>

@@ -50,6 +50,10 @@ class UrlMappings {
             action = [POST: "uploadImagen"]
         }
 
+        name buscar_postulacion: "/postulacion/busqueda"(controller: "postulacion", parseRequest: tre){
+            action = [GET: "busquedaIndex"]
+        }
+
         name upload_postulacion_pausa: "/postulacion/postulacionUpdatePausa"(controller: "postulacion", parseRequest: tre){
             action = [GET: "postulacionUpdatePausa"]
         }
