@@ -17,7 +17,7 @@ class RoleService {
         SecUser user = SecUser.findById(userId)
         SecUserSecRole.create user, rol
         if (!user.hasErrors() && user.save(flush: true)) {
-            springSecurityService.reauthenticate user.username
+            springSecurityService.reauthenticate getUser().username
         }
         LOG.info("[SUCCESS] [ADD ROLE] - [ROLE: ${role}] - [Usuario: ${user.username}]")
         return true
@@ -31,5 +31,11 @@ class RoleService {
         springSecurityService.reauthenticate user.username
         LOG.info("[SUCCESS] [BORRAR ROLE] - [ROLE: ${role}] - [Usuario: ${user.username}]")
         return true
+    }
+
+    private SecUser getUser() {
+        String usuario = springSecurityService.principal.username
+        SecUser secUser = SecUser.findByUsername(usuario)
+        return secUser
     }
 }

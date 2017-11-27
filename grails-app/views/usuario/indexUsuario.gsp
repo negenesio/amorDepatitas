@@ -98,7 +98,7 @@
                         </button>
                     </label>
                 </g:if>
-                <g:elseif test="${mascota.postulado}">
+                <g:elseif test="${mascota.postulado && postulacion_mascota && postulacion_mascota?.pausa.toString() == 'false'}">
                     <label style="padding-left: 5px">
                         <button id="btn_postulacionUpdate" class="button-selected open-postulacionUpdate" data-balloon="Modificar Postulacion" data-balloon-pos="up" data-toggle="modal" data-target=".postulacion_update" data-id="${mascota.id}" data-pausa="${postulacion_mascota.pausa}" data-observaciones="${postulacion_mascota.observaciones}" data-desde="${postulacion_mascota.desde}" data-dias="${postulacion_mascota.dias}" data-hasta="${postulacion_mascota.hasta}" data-postulacion="true" onclick="validateDias(this);">
                             <i class="fa fa-arrow-up" aria-hidden="true" style="font-size:17px; color: #268d1c"></i>
@@ -107,7 +107,7 @@
                 </g:elseif>
                 <g:else>
                     <label style="padding-left: 5px">
-                        <button id="btn_postulacionUpdate" class="button-selected open-postulacionUpdate" data-balloon="Modificar Postulacion" data-balloon-pos="up" data-toggle="modal" data-target=".postulacion_update" data-id="${mascota?.id}" data-pausa="${postulacion_mascota?.pausa}" data-observaciones="${postulacion_mascota?.observaciones}" data-desde="${postulacion_mascota?.desde}" data-dias="${postulacion_mascota?.dias}" data-hasta="${postulacion_mascota?.hasta}" data-postulacion="false" onclick="validateDias(this);">
+                        <button id="btn_postulacionUpdate" class="button-selected open-postulacionUpdate" data-balloon="Crear una Postulacion" data-balloon-pos="up" data-toggle="modal" data-target=".postulacion_update" data-id="${mascota?.id}" data-pausa="${postulacion_mascota?.pausa}" data-observaciones="${postulacion_mascota?.observaciones}" data-desde="${postulacion_mascota?.desde}" data-dias="${postulacion_mascota?.dias}" data-hasta="${postulacion_mascota?.hasta}" data-postulacion="false" onclick="validateDias(this);">
                             <i class="fa fa-arrow-up" aria-hidden="true" style="font-size:17px; color: red;"></i>
                         </button>
                     </label>
@@ -135,15 +135,19 @@
 <g:else>
     <div class="container" id="registrar_mascota">
         <div class="row main registrar-mascota">
-                <center>
-                    <h3 class="title">Para empezar, deberias cargar tu primer mascota!</h3>
-                    <g:link controller="mascota" action="createIndex">
-                        <button class="btn-info">Registrar Mascota</button>
-                    </g:link>
-                </center>
+            <center>
+                <h3 class="title">Para empezar, deberias cargar tu primer mascota!</h3>
+                <g:link controller="mascota" action="createIndex">
+                    <button class="btn-info">Registrar Mascota</button>
+                </g:link>
+            </center>
         </div>
     </div>
 </g:else>
+<g:if test="${mascotas?.postulado?.find{ it == true } && Postulacion.findAllByMascotaInList(mascotas).find {it.pausa == false}}">
+    <center><g:link controller="postulacion" action="busquedaIndex"><button class="btn-primary">Buscar Encuentro</button></g:link></center>
+</g:if>
+
 <input type="hidden" id="dias_selected"/>
 <script>
     $(document).ready(function() {

@@ -5,7 +5,7 @@
   Time: 22:57
 --%>
 
-<%@ page import="amordepatitas.Mascota; amordepatitas.Postulacion" contentType="text/html;charset=UTF-8" %>
+<%@ page import="amordepatitas.Mascota; amordepatitas.Postulacion; amordepatitas.Raza" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta name="layout" content="main"/>
@@ -66,44 +66,62 @@
         border-width: initial;
         border-color: initial;
         background-color: initial;
-        background-color: white;!important;
+background-color: white;!important;
     }
-    </style>
+</style>
 </head>
 <body>
 <g:if test="${postulaciones}">
-    <table class="table table-striped mascota">
+    <div><table class="table table-striped mascota">
         <thead>
         <tr class="mascota">
             <th>Nombre Mascota</th>
-            <th>Dias Disponible</th>
+            <th style="width: 100px">Dias Disponible</th>
             <th>Raza</th>
+            <th>Sexo</th>
             <th>Hora Disponible Desde</th>
             <th>Hora Disponible Hasta</th>
             <th>Edad</th>
             <th>Acciones</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody style="overflow-y:scroll;">
         <g:each in="${postulaciones}" var="postulacion">
             <tr class="mascota">
                 <td>${postulacion.mascota.nombre}</td>
-                <td>${postulacion.dias}</td>
+                <g:if test="${postulacion.dias == 'LUNES,MARTES,MIERCOLES,JUEVES,VIERNES,SABADO,DOMINGO'}">
+                    <td>SEMANA COMPLETA</td>
+                </g:if>
+                <g:else>
+                    <td>${postulacion.dias.replace("LUNES","LU").replace("MARTES","MAR").replace("MIERCOLES","MIER").replace("JUEVES","JUE").replace("VIERNES","VIER").replace("SABADO","SAB").replace("DOMINGO","DOM")}</td>
+                </g:else>
                 <td>${postulacion.mascota.raza.descripcion}</td>
+                <td>${postulacion.mascota.sexo}</td>
                 <td>${postulacion.desde.format('HH:mm')}</td>
                 <td>${postulacion.hasta.format('HH:mm')}</td>
                 <td>${new Date().format('YYYY').toInteger() - postulacion.mascota.fechaNacimiento.format('YYYY').toInteger()}</td>
                 <td>
-                <label style="padding-left: 5px">
-                    <button class="button-selected" data-balloon="Ver Detalle" data-balloon-pos="up">
-                        <i class="fa fa-eye" aria-hidden="true" style="font-size:17px;"></i>
-                    </button>
-                </label>
+                    <g:if test="${direccion?.id}">
+                        <button id="viewModalButton" class="button-btn_viewDetail button-selected open-viewDetail" data-balloon="Ver Detalle" data-balloon-pos="up" data-toggle="modal" data-target=".viewDetail" data-id="${postulacion}" onclick="setModal(${postulacion.id}, ${postulacion.mascota.id}, '${postulacion.mascota.sexo}')">
+                            <i class="fa fa-eye" aria-hidden="true" style="font-size:17px;"></i>
+                        </button>
+                    </g:if>
+                    <g:else>
+                        <label style="padding-left: 5px">
+                            <button class="button-btn_direccionVerificar" class="button-selected open-direccionVerificar" data-balloon="Ver Detalle" data-balloon-pos="up" data-toggle="modal" data-target=".direccionVerificar" data-id="${postulacion}">
+                                <i class="fa fa-eye" aria-hidden="true" style="font-size:17px;"></i>
+                            </button>
+                        </label>
+                    </g:else>
                 </td>
             </tr>
+
+            <button id="viewModalButton" style="visibility: hidden" class="button-btn_viewDetail button-selected open-viewDetail" data-balloon="Ver Detalle" data-balloon-pos="up" data-toggle="modal" data-target=".viewDetail" data-id="${postulacion}" onclick="setModal(${postulacion.id}, ${postulacion.mascota.id}, '${postulacion.mascota.sexo}')">
+                <i class="fa fa-eye" aria-hidden="true" style="font-size:17px;"></i>
+            </button>
         </g:each>
         </tbody>
-    </table>
+    </table></div>
 </g:if>
 <g:else>
     <div class="container" id="registrar_mascota">
@@ -115,5 +133,48 @@
         </div>
     </div>
 </g:else>
+<g:render template="/direccion/direccionDatos"/>
+<g:render template="/postulacion/detalle"/>
+<div id="notificaciones"></div>
+<script>
+    function setModal(postulacionId, mascotaId, sexoMascota){
+
+        $(".modal-body #postulacionModal").val(postulacionId);
+        $(".modal-body #mascotaIdModal").val(mascotaId);
+        $(".modal-body #sexoMascotaModal").val(sexoMascota);
+
+        jQuery.ajax(
+            {
+                type:'GET',
+                data:'postulacionId=' + postulacionId,
+                url:'/amorDePatitas/postulacion/getMascotasTablaDetail',
+                success:function(data,textStatus)
+                {
+                    jQuery('#tablaMascotasDetail').html(data);
+                    $("#btn_enviarEncuentro").attr('style','visibility: hidden');
+                },
+                error:
+                    function(XMLHttpRequest,textStatus,errorThrown){
+
+                    }
+            });
+
+        jQuery.ajax(
+            {
+                type:'GET',
+                data:'mascotaId=' + mascotaId,
+                url:'/amorDePatitas/direccion/index',
+                success:function(data,textStatus)
+                {
+                    jQuery('#direccion').html(data);
+                },
+                error:
+                    function(XMLHttpRequest,textStatus,errorThrown){
+
+                    }
+            });
+
+    }
+</script>
 </body>
 </html>

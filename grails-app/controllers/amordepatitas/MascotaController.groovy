@@ -58,6 +58,11 @@ class MascotaController {
         return render(resultMascota)
     }
 
+    @Secured(['ROLE_ADMIN', 'ROLE_USER', 'ROLE_ENCUENTRO'])
+    def vistaPrevia(){
+        return render(view:'_vistaPrevia', model:[mascota:Mascota.findById(params.mascotaId.toLong())])
+    }
+
     @Secured(['ROLE_ADMIN', 'ROLE_USER'])
     def createIndex() {
         return render(view:"create")

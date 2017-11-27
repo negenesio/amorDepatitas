@@ -62,6 +62,10 @@ class UrlMappings {
             action = [POST: "cancelarPostularMascota"]
         }
 
+        name enviar_encuentro: "/postuacion/encuentro"(controller: "encuentro", parseRequest: tre){
+            action = [POST: "enviarEncuentro"]
+        }
+
 
         "/login/$action?"(controller: "login")
         "/logout/$action?"(controller: "logout")

@@ -313,9 +313,9 @@
 													<sec:ifAnyGranted roles='ROLE_POSTULACION'>
 														<li><g:link controller="postulacion" action="busquedaIndex">Buscar</g:link></li>
 													</sec:ifAnyGranted>
-													<sec:ifAnyGranted roles='ROLE_MASCOTA'>
+													%{--<sec:ifAnyGranted roles='ROLE_MASCOTA'>
 														<li><g:link controller="mascota" action="postularMascotaIndex">Postular</g:link></li>
-													</sec:ifAnyGranted>
+													</sec:ifAnyGranted>--}%
 													%{--</g:if>--}%
 												</ul>
 										</div>
@@ -324,6 +324,16 @@
 							</ul>
 						</li>
 						<li class="nav-divider"></li>
+						<sec:ifAnyGranted roles='ROLE_ENCUENTRO'>
+						<li><g:link controller="encuentro" action="encuentroIndex" class="dropdown-toggle" data-toggle="dropdown">Mis Encuentros</g:link></li>
+							<li class="nav-divider"></li>
+						</sec:ifAnyGranted>
+						<sec:ifAnyGranted roles='ROLE_CALIFICACION'>
+							<li><g:link controller="calificacionEncuentro" action="califiacionIndex" class="dropdown-toggle" data-toggle="dropdown">Mis Calificaciones</g:link></li>
+							<li class="nav-divider"></li>
+						</sec:ifAnyGranted>
+
+
 						<li><g:link controller="logout">Desconectarse</g:link></li>
 					</ul>
 					<!-- End Menu -->

@@ -97,6 +97,9 @@
 </div>
 <script>
     $(document).ready(function() {
+    <sec:ifLoggedIn>
+        window.location.href = "/amorDePatitas/usuario/index";
+    </sec:ifLoggedIn>
         $('#form_registro').bootstrapValidator({
             feedbackIcons: {
                 valid: 'fa fa-check-square-o',

@@ -4,6 +4,7 @@ import amordepatitas.seguridad.SecUser
 import grails.converters.JSON
 import grails.plugin.springsecurity.SpringSecurityService
 import grails.plugin.springsecurity.annotation.Secured
+import org.hibernate.StaleObjectStateException
 
 class PostulacionController {
 
@@ -14,7 +15,7 @@ class PostulacionController {
     def busquedaIndex(){
         SecUser usuario = getUser()
         List<Postulacion> postulacionList = Postulacion.findAllByUser(usuario)
-        List<Raza> resultRaza = postulacionList.mascota.raza.unique()
+        List<Raza> resultRaza = postulacionList.findAll { it.pausa == false } .mascota.raza.unique()
         return render(view: 'busquedaIndex', model:[razas: resultRaza])
     }
     private List<Mascota> getMascotasByRaza(List<Mascota> mascotaList, Long raza_id){
@@ -148,7 +149,8 @@ class PostulacionController {
                 result = resultPostulacion
             }
         }
-        return render(view:"busquedaFiltros", model:[postulaciones:result])
+        Direccion direccion = Direccion.findByUsuario(getUser())
+        return render(view:"busquedaFiltros", model:[postulaciones:result, direccion:direccion])
     }
 
     @Secured(['ROLE_ADMIN', 'ROLE_MASCOTA'])
@@ -188,13 +190,16 @@ class PostulacionController {
                 usuarioId : usuario.id
         ]
 
-        postulacionService.savePostulacion(postulacion_params)
+        try{
+            postulacionService.savePostulacion(postulacion_params)
+        } catch (Exception ex) {
+            return redirect(controller: 'usuario', action: 'indexUsuario')
+        }
         return redirect(controller: 'usuario', action: 'indexUsuario')
     }
 
     @Secured(['ROLE_ADMIN', 'ROLE_MASCOTA'])
     def cancelarPostularMascota() {
-        println "CANCELACION :D"
         Long mascotaId = params.id.toLong()
         postulacionService.cancelarPostular(mascotaId)
         redirect (action: 'indexUsuario', controller: 'usuario')
@@ -223,8 +228,6 @@ class PostulacionController {
             }
             return false
         }
-        println postulacion
-        println postulacion as JSON
         log.info("[SUCCESS] [UPDATE POSTULACION PAUSA] - [USUARIO: ${postulacion.user.username}]")
         return redirect(controller: 'usuario', action:'indexUsuario', params:[postulacion: postulacion as JSON])
     }
@@ -240,4 +243,15 @@ class PostulacionController {
         SecUser secUser = SecUser.findByUsername(usuario)
         return secUser
     }
+
+    def getMascotasTablaDetail() {
+        Postulacion postulacion = Postulacion.findById(params.postulacionId.toLong())
+        Mascota mascotaPostulacion = postulacion.mascota
+        SecUser usuario = getUser()
+        List<Postulacion> postulacionesUsuario = Postulacion.findAllByUser(usuario)
+        List<Imagenes> imagenesPostulacion = Imagenes.findAllByMascota(mascotaPostulacion)
+        postulacionesUsuario = postulacionesUsuario.findAll { it.pausa == false && it.mascota.postulado == true && it.mascota.sexo != mascotaPostulacion.sexo && it.mascota.raza.id == mascotaPostulacion.raza.id }
+        return render(view: '_tablaMascotasDetail', model:[postulacionesUsuario: postulacionesUsuario, postulacion: postulacion, imagenesPostulacion:imagenesPostulacion])
+    }
+
 }
