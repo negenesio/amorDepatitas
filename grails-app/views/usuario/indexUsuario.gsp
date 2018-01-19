@@ -145,9 +145,10 @@
             <center>
                 <h3 class="title">Para empezar, deberias cargar tu primer mascota!</h3>
                 <g:link controller="mascota" action="createIndex">
-                    <button class="btn-info">Registrar Mascota</button>
+                    <button class="btn-info"><asset:image src="mascotas/patitas.png" width="26" height="26"/>Registrar Mascota</button>
                 </g:link>
             </center>
+
         </div>
     </div>
 </g:else>
