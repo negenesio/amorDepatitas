@@ -69,6 +69,13 @@
 </style>
 </head>
 <body>
+<div>
+    <span id="info" data-balloon="Mostrar / Ocultar informacon" data-balloon-pos="right"><i class="fa fa-info-circle" aria-hidden="true" style="font-size:25px; background-color: rgba(66, 70, 69, 0.69); color: yellowgreen"></i></span>
+
+    <div id="info_descripcion" style="font-size:15px;background-color: rgba(66, 70, 69, 0.69); width: auto;" >
+        <center><label style="color: #6bcd3c">Esta es la seccion de Busqueda y Aplicacion de filtros! <br>Ten en cuenta la raza y el sexo de tu mascota para ser mas eficientes en la busqueda! mucha suerte!!</label></center>
+    </div>
+</div>
     <div class="container" id="registrar_mascota" style="height: 120px">
         <div class="row main registrar-mascota">
             <center>
@@ -347,6 +354,15 @@
     }
 
     $( document ).ready(function() {
+
+        $("#info").click(function () {
+            if($("#info_descripcion").is(':visible')){
+                $("#info_descripcion").hide();
+            } else {
+                $("#info_descripcion").show();
+            }
+        });
+
         $('#tabla_horario').hide();
         $('#tabla_edad').hide();
         $('#check_horario').checkboxpicker({

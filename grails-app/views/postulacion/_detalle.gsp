@@ -18,8 +18,6 @@
         </div>
     </div>
 </div>
-HOLA
-
 <g:form id="form_enviarEncuentro" mapping="enviar_encuentro" method="POST">
     <div style="visibility: hidden">
         <input type="hidden" name="mascotaUsuario" id="mascotaUsuario"/>

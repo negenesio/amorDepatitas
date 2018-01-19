@@ -5,7 +5,7 @@
   Time: 22:57
 --%>
 
-<%@ page import="amordepatitas.Mascota; amordepatitas.Postulacion; amordepatitas.Raza" contentType="text/html;charset=UTF-8" %>
+<%@ page import="amordepatitas.Mascota; amordepatitas.Postulacion; amordepatitas.Raza; amordepatitas.CalificacionEncuentro" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta name="layout" content="main"/>
@@ -71,10 +71,18 @@ background-color: white;!important;
 </style>
 </head>
 <body>
+<div>
+    <span id="info" data-balloon="Mostrar / Ocultar informacon" data-balloon-pos="right"><i class="fa fa-info-circle" aria-hidden="true" style="font-size:25px; background-color: rgba(66, 70, 69, 0.69); color: yellowgreen"></i></span>
+
+    <div id="info_descripcion" style="font-size:15px;background-color: rgba(66, 70, 69, 0.69); width: auto;" >
+        <center><label style="color: #6bcd3c">Aqui puedes ver el resultado de los filtros aplicados. <br>Si te interesa alguna mascota puedes seleccionarla para contactar un encuentro!</label></center>
+    </div>
+</div>
 <g:if test="${postulaciones}">
     <div><table class="table table-striped mascota">
         <thead>
         <tr class="mascota">
+            <th>Reputacion</th>
             <th>Nombre Mascota</th>
             <th style="width: 100px">Dias Disponible</th>
             <th>Raza</th>
@@ -88,6 +96,13 @@ background-color: white;!important;
         <tbody style="overflow-y:scroll;">
         <g:each in="${postulaciones}" var="postulacion">
             <tr class="mascota">
+                <g:set var="calificacones" value="${CalificacionEncuentro.findAllByCreador(postulacion.mascota.secUser)}"/>
+                <g:if test="${calificacones}">
+                    <td>${calificacones.nota.sum()/calificacones.size()}</td>
+                </g:if>
+                <g:else>
+                    <td>0</td>
+                </g:else>
                 <td>${postulacion.mascota.nombre}</td>
                 <g:if test="${postulacion.dias == 'LUNES,MARTES,MIERCOLES,JUEVES,VIERNES,SABADO,DOMINGO'}">
                     <td>SEMANA COMPLETA</td>
@@ -137,6 +152,16 @@ background-color: white;!important;
 <g:render template="/postulacion/detalle"/>
 <div id="notificaciones"></div>
 <script>
+
+    $( document ).ready(function() {
+        $("#info").click(function () {
+            if($("#info_descripcion").is(':visible')){
+                $("#info_descripcion").hide();
+            } else {
+                $("#info_descripcion").show();
+            }
+        });
+    });
     function setModal(postulacionId, mascotaId, sexoMascota){
 
         $(".modal-body #postulacionModal").val(postulacionId);

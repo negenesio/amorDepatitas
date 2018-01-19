@@ -71,6 +71,13 @@
     </style>
 </head>
 <body>
+<div>
+    <span id="info" data-balloon="Mostrar / Ocultar informacon" data-balloon-pos="right"><i class="fa fa-info-circle" aria-hidden="true" style="font-size:25px; background-color: rgba(66, 70, 69, 0.69); color: yellowgreen"></i></span>
+
+    <div id="info_descripcion" style="font-size:15px;background-color: rgba(66, 70, 69, 0.69); width: auto;" >
+        <center><label style="color: #6bcd3c">En esta seccion podras registrar una nueva Mascota, tambien editar mascotas ya existentes!<br> Ademas podras gestionar las postulaciones de las mismas.!</label></center>
+    </div>
+</div>
 <g:if test="${mascotas}">
     <table class="table table-striped mascota">
         <thead>
@@ -120,11 +127,11 @@
                     </g:link>
                 </label>
                 <label style="padding-left: 5px">
-                    <g:link controller="mascota" action="deletedMascota" params="[mascotaId: mascota.id]">
-                        <button class="button-selected" data-balloon="Eliminar Mascota" data-balloon-pos="up">
+
+                        <button class="button-selected" data-balloon="Eliminar Mascota" data-balloon-pos="up" onclick="eliminarMascota(${mascota.id});">
                             <i class="fa fa-times" aria-hidden="true" style="font-size:17px;"></i>
                         </button>
-                    </g:link>
+
                 </label>
             </td>
         </tr>
@@ -150,9 +157,35 @@
 
 <input type="hidden" id="dias_selected"/>
 <script>
+    function eliminarMascota(mascotaId){
+        var result = confirm("Estas Seguro que desea eliminar la Mascota Seleccionada?")
+           if(result == true){
+               jQuery.ajax(
+                   {
+                       type:'POST',
+                       data: 'mascotaId=' + mascotaId,
+                       url:'/amorDePatitas/mascota/deletedMascota',
+                       success:function(data,textStatus)
+                       {
+                           window.location.reload(true);
+                       }
+                   });
+           }
+
+    }
     $(document).ready(function() {
+
+
         $("#ajax_pausa").hide();
         $("#test_pausa").hide();
+
+        $("#info").click(function () {
+            if($("#info_descripcion").is(':visible')){
+                $("#info_descripcion").hide();
+            } else {
+                $("#info_descripcion").show();
+            }
+        });
     });
     function validateDias(input_data){
         var pausa = $(input_data).data('pausa');
@@ -177,7 +210,9 @@
         }
         $(".modal-body #postulacion").val( postulacionStatus );
     }
+
 </script>
 <g:render template="/postulacion/modalPostularUpdate"/>
+
 </body>
 </html>

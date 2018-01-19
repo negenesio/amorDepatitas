@@ -18,6 +18,13 @@
 </head>
 
 <body>
+<div>
+    <span id="info" data-balloon="Mostrar / Ocultar informacon" data-balloon-pos="right"><i class="fa fa-info-circle" aria-hidden="true" style="font-size:25px; background-color: rgba(66, 70, 69, 0.69); color: yellowgreen"></i></span>
+
+    <div id="info_descripcion" style="font-size:15px;background-color: rgba(66, 70, 69, 0.69); width: auto;" >
+        <center><label style="color: #6bcd3c">Cada campo que cambies, sera actualizado en tu mascota seleccionada. Recuerda ser lo mas sincero posible, eso aumentara el indice de peticiones!</label></center>
+    </div>
+</div>
     <div class="container" id="registro_mascota">
         <div class="row main">
             <div class="main-login main-center">
@@ -127,6 +134,15 @@
 
 <script>
     $(document).on('ready', function() {
+
+        $("#info").click(function () {
+            if($("#info_descripcion").is(':visible')){
+                $("#info_descripcion").hide();
+            } else {
+                $("#info_descripcion").show();
+            }
+        });
+
         var cantTh = 0
         $("#error_upload").hide();
         $("#upload_images").hide();

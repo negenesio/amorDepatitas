@@ -303,7 +303,7 @@
 					<!-- Start Menu -->
 					<ul class="nav navbar-nav navbar-inverse" data-in="fadeInDown" data-out="fadeOutUp">
 						<li class="dropdown megamenu-fw">
-						<g:link controller="usuario" action="indexUsuario" class="dropdown-toggle" data-toggle="dropdown">Mascotas</g:link>
+						<g:link controller="usuario" action="indexUsuario" class="dropdown-toggle" data-toggle="dropdown">Mis Mascotas</g:link>
 							<ul class="dropdown-menu megamenu-content animated fadeOutUp" role="menu" style="display: none; opacity: 1;">
 								<li>
 									<div class="row">

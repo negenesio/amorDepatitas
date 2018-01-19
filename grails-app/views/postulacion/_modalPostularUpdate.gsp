@@ -5,6 +5,13 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                     <i class="fa fa-times" aria-hidden="true" style="font-size:17px;"></i>
                 </button>
+                <div>
+                    <span id="infoModal" data-balloon="Mostrar / Ocultar informacon" data-balloon-pos="right"><i class="fa fa-info-circle" aria-hidden="true" style="font-size:25px; background-color: rgba(66, 70, 69, 0.69); color: yellowgreen"></i></span>
+
+                    <div id="info_descripcionModal" style="font-size:15px;background-color: rgba(66, 70, 69, 0.69); width: auto;" >
+                        <center><label style="color: #6bcd3c">En esta seccion podras registrar una nueva Mascota, tambien editar mascotas ya existentes!<br> Ademas podras gestionar las postulaciones de las mismas.!</label></center>
+                    </div>
+                </div>
                 <h4 class="modal-title" id="myModalLabel">Opciones de Postulacion:</h4>
             </div>
             <g:form id="form_postulacion" controller="postulacion" action="postularMascota" method="POST">
@@ -175,6 +182,14 @@
         <g:remoteFunction method="POST" controller="postulacion" action="cancelarPostularMascota" params="'id=' + mascotaId" ></g:remoteFunction>
     }
     $( document ).ready(function() {
+            $("#infoModal").click(function () {
+                if($("#info_descripcionModal").is(':visible')){
+                    $("#info_descripcionModal").hide();
+                } else {
+                    $("#info_descripcionModal").show();
+                }
+            });
+
         $('#postulacionUpdate').on('hidden.bs.modal', function () {
             $("#l_lunes_update").addClass('btn-default');
             $("#l_lunes_update").removeClass('btn-success');
