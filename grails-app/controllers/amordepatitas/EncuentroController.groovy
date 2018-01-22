@@ -11,6 +11,7 @@ class EncuentroController {
     private static final Logger LOG = Logger.getLogger(getClass())
     SpringSecurityService springSecurityService
     RoleService roleService
+    MatchEncuentrosService matchEncuentrosService
 
     @Secured(['ROLE_ADMIN', 'ROLE_ENCUENTRO'])
     def encuentroIndex(){
@@ -21,7 +22,7 @@ class EncuentroController {
         return [misSolicitudes: misSolicitudes, misPeticiones: misPeticiones, direccion:direccion]
     }
 
-    @Secured(['ROLE_ADMIN', 'ROLE_POSTULACION', 'ROLE_ENCUENTRO'])
+    @Secured(['ROLE_ADMIN','ROLE_ENCUENTRO'])
     def enviarEncuentro() {
         SecUser usuarioSesion = getUser()
         Mascota mascotaPeticion = Mascota.findById(params.mascotaEncuentro.toLong())
@@ -168,19 +169,8 @@ class EncuentroController {
             calificacionEncuentroConfirm.estado = 'confirm'
             calificacionEncuentroConfirm.fechaModificacion = new Date();
             calificacionEncuentroConfirm.save(flush: true)
-
             CalificacionEncuentro calificacionEncuentroNuevo = new CalificacionEncuentro(encuentro:encuentro, descripcion: descripcion, nota:nota, creador: creador, calificado:calificado, estado:'confirm' )
             calificacionEncuentroNuevo.save(flush: true)
-
-            Postulacion peticionPostulacion = Postulacion.findByMascota(peticion)
-            peticionPostulacion.pausa = true
-            peticionPostulacion.save(flush:true)
-            println peticionPostulacion
-
-            Postulacion solicitudPostulacion = Postulacion.findByMascota(solicitud)
-            solicitudPostulacion.pausa = true
-            solicitudPostulacion.save(flush:true)
-            println solicitudPostulacion
         }else {
             CalificacionEncuentro calificacionEncuentro = new CalificacionEncuentro(encuentro:encuentro, descripcion: descripcion, nota:nota, creador: creador, calificado:calificado, estado:'pending' )
             calificacionEncuentro.save(flush: true)
@@ -194,4 +184,59 @@ class EncuentroController {
         SecUser secUser = SecUser.findByUsername(usuario)
         return secUser
     }
+
+    @Secured(['ROLE_ADMIN', 'ROLE_MASCOTA'])
+    def buscarEncuentro() {
+        SecUser usuario = getUser()
+        Mascota mascota = Mascota.findById(params?.mascotaId)
+        if(mascota.secUser != usuario) {
+            return redirect(controller: "usuario", action: "indexUsuario")
+        }
+        Mascota mascotaBusqueda = getEncuentroMascota(mascota, usuario.id)
+
+        return render (view:"resultadoBusqueda", model:[mascotaBusqueda:mascotaBusqueda])
+    }
+
+    private Mascota getEncuentroMascota(Mascota buscador, Long userId) {
+        String sexoSearch = ""
+        if(buscador.sexo == 'MACHO') {
+            sexoSearch = 'HEMBRA'
+        }
+        if(buscador.sexo == 'HEMBRA') {
+            sexoSearch = 'MACHO'
+        }
+        Mascota encontrado = Mascota.findByRazaAndSexo(buscador.raza, sexoSearch)
+
+        if(MatchEncuentros.findByBuscadorAndEncontrado(buscador, encontrado)){
+            encontrado = null
+        }
+
+
+        return (encontrado?.secUser?.id != userId) ? encontrado : encontrado
+    }
+
+    @Secured(['ROLE_ADMIN', 'ROLE_MASCOTA'])
+    def crearMatchEncuentros(){
+        Mascota buscador = Mascota.findById(params.buscadorId)
+        Mascota encontrado = Mascota.findById(params.encontradoId)
+        String estado = params.estado
+
+        MatchEncuentros match = new MatchEncuentros()
+        match.buscador = buscador
+        match.encontrado = encontrado
+        match.estado = estado
+
+        match.save()
+        if(match.hasErrors()){
+            match.errors.allErrors.each {
+                LOG.error("[FAIL-ERROR] [CREATE MATCH] - [MESSAGE: ${it}]")
+            }
+            return false
+        }
+
+        return true
+    }
+
+
+
 }

@@ -34,7 +34,7 @@ class MascotaService {
         String username = usuario.username
         Mascota mascota = Mascota.findById(mascotaId)
         Imagenes.findAllByMascota(mascota).each { it.delete() }
-        Postulacion.findByMascotaAndUser(mascota, usuario).each { it.delete() }
+        /*Postulacion.findByMascotaAndUser(mascota, usuario).each { it.delete() }*/
         mascota.delete(flush: true)
         if(mascota.hasErrors()) {
             mascota.errors.allErrors.each {

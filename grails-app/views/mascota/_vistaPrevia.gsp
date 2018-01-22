@@ -1,4 +1,4 @@
-<%@ page import="amordepatitas.Imagenes; amordepatitas.Postulacion" contentType="text/html;charset=UTF-8" %>
+<%@ page import="amordepatitas.Imagenes;" contentType="text/html;charset=UTF-8" %>
 <style>
 .none td{
     background-color: #E1F2B6;
@@ -72,13 +72,4 @@
     </g:if>
 </div>
 <div>
-<g:set var="postulacion" value="${Postulacion.findByMascota(mascota)}"/>
-<g:if test="${postulacion?.observaciones}">
-    <center>
-        <h4 style="margin: 0px;">Algo Sobre ${mascota.nombre}</h4>
-        <br>
-        <label>${postulacion.observaciones}</label>
-    </center>
-
-</g:if>
 </div>

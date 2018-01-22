@@ -5,7 +5,7 @@
   Time: 22:57
 --%>
 
-<%@ page import="amordepatitas.Mascota; amordepatitas.Postulacion" contentType="text/html;charset=UTF-8" %>
+<%@ page import="amordepatitas.Mascota;" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta name="layout" content="main"/>
@@ -75,7 +75,7 @@
     <span id="info" data-balloon="Mostrar / Ocultar informacon" data-balloon-pos="right"><i class="fa fa-info-circle" aria-hidden="true" style="font-size:25px; background-color: rgba(66, 70, 69, 0.69); color: yellowgreen"></i></span>
 
     <div id="info_descripcion" style="font-size:15px;background-color: rgba(66, 70, 69, 0.69); width: auto;" >
-        <center><label style="color: #6bcd3c">En esta seccion podras registrar una nueva Mascota, tambien editar mascotas ya existentes!<br> Ademas podras gestionar las postulaciones de las mismas.!</label></center>
+        <center><label style="color: #6bcd3c">En esta seccion podras registrar una nueva Mascota, tambien editar mascotas ya existentes!</label></center>
     </div>
 </div>
 <g:if test="${mascotas}">
@@ -97,29 +97,12 @@
             <td>${mascota.fechaNacimiento.format('dd/mm/YYYY')}</td>
             <td>${mascota.raza.descripcion}</td>
             <td>
-                <g:set var="postulacion_mascota" value="${postulaciones?.find{it?.mascota?.id == mascota.id}}"/>
-                <g:if test="${mascota.postulado && postulacion_mascota && postulacion_mascota?.pausa.toString() == 'true'}">
-                    <label style="padding-left: 5px">
-                        <button id="btn_postulacionUpdate" class="button-selected open-postulacionUpdate" data-balloon="Modificar Postulacion" data-balloon-pos="up" data-toggle="modal" data-target=".postulacion_update" data-id="${mascota.id}" data-pausa="${postulacion_mascota.pausa}" data-observaciones="${postulacion_mascota.observaciones}" data-desde="${postulacion_mascota.desde}" data-dias="${postulacion_mascota.dias}" data-hasta="${postulacion_mascota.hasta}" data-postulacion="true" onclick="validateDias(this);">
-                            <i class="fa fa-pause" aria-hidden="true" style="font-size:17px; color: #a7a935"></i>
-                        </button>
-                    </label>
-                </g:if>
-                <g:elseif test="${mascota.postulado && postulacion_mascota && postulacion_mascota?.pausa.toString() == 'false'}">
-                    <label style="padding-left: 5px">
-                        <button id="btn_postulacionUpdate" class="button-selected open-postulacionUpdate" data-balloon="Modificar Postulacion" data-balloon-pos="up" data-toggle="modal" data-target=".postulacion_update" data-id="${mascota.id}" data-pausa="${postulacion_mascota.pausa}" data-observaciones="${postulacion_mascota.observaciones}" data-desde="${postulacion_mascota.desde}" data-dias="${postulacion_mascota.dias}" data-hasta="${postulacion_mascota.hasta}" data-postulacion="true" onclick="validateDias(this);">
-                            <i class="fa fa-arrow-up" aria-hidden="true" style="font-size:17px; color: #268d1c"></i>
-                        </button>
-                    </label>
-                </g:elseif>
-                <g:else>
-                    <label style="padding-left: 5px">
-                        <button id="btn_postulacionUpdate" class="button-selected open-postulacionUpdate" data-balloon="Crear una Postulacion" data-balloon-pos="up" data-toggle="modal" data-target=".postulacion_update" data-id="${mascota?.id}" data-pausa="${postulacion_mascota?.pausa}" data-observaciones="${postulacion_mascota?.observaciones}" data-desde="${postulacion_mascota?.desde}" data-dias="${postulacion_mascota?.dias}" data-hasta="${postulacion_mascota?.hasta}" data-postulacion="false" onclick="validateDias(this);">
-                            <i class="fa fa-arrow-up" aria-hidden="true" style="font-size:17px; color: red;"></i>
-                        </button>
-                    </label>
-                </g:else>
                 <label style="padding-left: 5px">
+                    <label style="padding-left: 5px">
+                        <button class="button-selected" data-balloon="Buscar Pareja" data-balloon-pos="up">
+                            <i><g:link controller="encuentro" action="buscarEncuentro" params="[mascotaId: mascota.id]"><asset:image src="mascotas/searchLove.png" width="26" height="26"/></g:link></i>
+                        </button>
+                    </label>
                     <g:link controller="mascota" action="update" params="[mascotaId: mascota.id]">
                         <button class="button-selected" data-balloon="Modificar Mascota" data-balloon-pos="up">
                             <i class="fa fa-pencil" aria-hidden="true" style="font-size:17px;" ></i>
@@ -127,11 +110,9 @@
                     </g:link>
                 </label>
                 <label style="padding-left: 5px">
-
-                        <button class="button-selected" data-balloon="Eliminar Mascota" data-balloon-pos="up" onclick="eliminarMascota(${mascota.id});">
-                            <i class="fa fa-times" aria-hidden="true" style="font-size:17px;"></i>
-                        </button>
-
+                    <button class="button-selected" data-balloon="Eliminar Mascota" data-balloon-pos="up" onclick="eliminarMascota(${mascota.id});">
+                        <i class="fa fa-times" aria-hidden="true" style="font-size:17px; color: red"></i>
+                    </button>
                 </label>
             </td>
         </tr>
@@ -152,10 +133,6 @@
         </div>
     </div>
 </g:else>
-<g:if test="${mascotas?.postulado?.find{ it == true } && Postulacion.findAllByMascotaInList(mascotas).find {it.pausa == false}}">
-    <center><g:link controller="postulacion" action="busquedaIndex"><button class="btn-primary">Buscar Encuentro</button></g:link></center>
-</g:if>
-
 <input type="hidden" id="dias_selected"/>
 <script>
     function eliminarMascota(mascotaId){
@@ -188,32 +165,8 @@
             }
         });
     });
-    function validateDias(input_data){
-        var pausa = $(input_data).data('pausa');
-        var desde = $(input_data).data('desde');
-        var hasta = $(input_data).data('hasta');
-        var dias = $(input_data).data('dias');
-        var observaciones = $(input_data).data('observaciones');
-        var mascotaIdModal = $(input_data).data('id');
-        var postulacionStatus = $(input_data).data('postulacion');
-        if(pausa == false){
-            $("#pausa_no").click();
-        } else {
-            $("#pausa_si").click();
-        }
-        $(".modal-body #pausaModal").val( pausa );
-        $(".modal-body #mascotaIdModal").val( mascotaIdModal );
-        $(".modal-body #observaciones").val( observaciones );
-        $(".modal-body #desde").val( moment(desde).format("HH:mm"));
-        $(".modal-body #hasta").val( moment(hasta).format("HH:mm") );
-        if(dias){
-            $("#dias_selected").val(dias.split(','));
-        }
-        $(".modal-body #postulacion").val( postulacionStatus );
-    }
 
 </script>
-<g:render template="/postulacion/modalPostularUpdate"/>
 
 </body>
 </html>

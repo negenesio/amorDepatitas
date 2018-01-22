@@ -11,7 +11,9 @@ class Mascota {
     Date fechaCreacion = new Date()
     String sexo
     boolean postulado = false
+    String descripcion
 
     static constraints = {
+        descripcion (nullable: true)
     }
 }

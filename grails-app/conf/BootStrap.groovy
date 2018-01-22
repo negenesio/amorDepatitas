@@ -1,5 +1,4 @@
 import amordepatitas.Ciudad
-import amordepatitas.Postulacion
 import amordepatitas.Raza
 import amordepatitas.seguridad.SecRole
 import amordepatitas.seguridad.SecUser
@@ -15,7 +14,6 @@ class BootStrap {
         def userRole = SecRole.findByAuthority('ROLE_USER') ?: new SecRole(authority: 'ROLE_USER').save(failOnError: true)
         def adminRole = SecRole.findByAuthority('ROLE_ADMIN') ?: new SecRole(authority: 'ROLE_ADMIN').save(failOnError: true)
         def mascotaRole = SecRole.findByAuthority('ROLE_MASCOTA') ?: new SecRole(authority: 'ROLE_MASCOTA').save(failOnError: true)
-        def rolePostulacion = SecRole.findByAuthority('ROLE_POSTULACION') ?: new SecRole(authority: 'ROLE_POSTULACION').save(failOnError: true)
         def roleEncuentro = SecRole.findByAuthority('ROLE_ENCUENTRO') ?: new SecRole(authority: 'ROLE_ENCUENTRO').save(failOnError: true)
         def roleCalificacion = SecRole.findByAuthority('ROLE_CALIFICACION') ?: new SecRole(authority: 'ROLE_CALIFICACION').save(failOnError: true)
         def roleEncuentroAprobado = SecRole.findByAuthority('ROLE_ENCUENTRO_APROBADO') ?: new SecRole(authority: 'ROLE_ENCUENTRO_APROBADO').save(failOnError: true)
@@ -131,25 +129,6 @@ class BootStrap {
         new Mascota(nombre: 'RUPERTO', raza: Raza.findByDescripcion('Schnauzer estándar'), fechaNacimiento:
                 Date.parse('YYY-mm-dd', '2010-08-22'), secUser: SecUser.findByUsername('ADMIN'),
                 fechaCreacion: new Date(), sexo: 'MACHO').save(failOnError: true)
-
-        new Postulacion(user: SecUser.findByUsername('ADMIN'), mascota: Mascota.findById(1),
-                desde: Date.parse('HH:mm', '10:00'), hasta:  Date.parse('HH:mm', '18:00'),
-                dias: 'LUNES,MARTES,MIERCOLES,JUEVES,VIERNES',
-                observaciones: 'Ruperto es un macho aplpha de excelente cualidades').save(failOnError: true)
-
-        new Postulacion(user: SecUser.findByUsername('ADMIN'), mascota: Mascota.findById(2),
-                desde: Date.parse('HH:mm', '15:00'), hasta:  Date.parse('HH:mm', '22:00'),
-                dias: 'SABADO,DOMINGO', observaciones: 'Kero es muy jugueton y alegre').save(failOnError: true)
-        Mascota mascota = Mascota.findById(1)
-        mascota.postulado = true
-        mascota.save(failOnError: true)
-
-        mascota = Mascota.findById(2)
-        mascota.postulado = true
-        mascota.save(failOnError: true)
-
-        SecUserSecRole.create(adminUser, mascotaRole)
-        SecUserSecRole.create(adminUser, rolePostulacion)
 
         new Mascota(nombre: 'PEPE', raza: Raza.findByDescripcion('Schnauzer miniatura'), fechaNacimiento: Date.parse('YYY-mm-dd', '2015-11-04'), secUser: SecUser.findByUsername('nico'),
                 fechaCreacion: new Date(), sexo: 'MACHO').save(failOnError: true)

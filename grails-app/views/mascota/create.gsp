@@ -80,6 +80,11 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="form-group" style="padding-top: 10px;">
+                        <label for="exampleTextarea"><i class="fa fa-eye" aria-hidden="true" style="font-size: 20px;"></i><div id="charNum"> Descripcion:</div></label>
+                        <textarea name="descripcion" maxlength="140" class="form-control" id="exampleTextarea" rows="3" onkeyup="countChar(this)"></textarea>
+                    </div>
                     <div class="form-group ">
                         <input type="submit" class="btn btn-info btn-block login" value="Guardar Mascota"/>
                     </div>
@@ -153,7 +158,14 @@
     function getMascotaId() {
         return $("#mascota_id_created").text();
     }
-
+    function countChar(val) {
+        var len = val.value.length-1;
+        if (len >= 140) {
+            val.value = val.value.substring(0, 140);
+        } else {
+            $('#charNum').text(" Descripcion: "+(140 - len-1));
+        }
+    };
 </script>
 
 </body>
